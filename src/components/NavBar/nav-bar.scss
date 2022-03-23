@@ -36,6 +36,22 @@
         .header-container__links-btn{
             color: black;
             font-weight: 500;
+
+            .header-container__links-carrito{
+                font-size:1.5rem;
+                
+            }
+
+            p{
+                position:absolute;
+                padding:.1rem .5rem;
+                border-radius: 1rem;
+                background-color: red;
+                top:.2rem;
+                left:3rem;
+                color:#fff;
+                font-weight: bold;
+            }
         }
     }
 }
@@ -67,10 +83,23 @@
             height: auto;
             margin:2rem auto;
             flex-direction: row;
+            
             .header-container__links-btn{
-                margin-right: 4rem;
+                margin:auto;
+                margin-right: 2rem;
+                position:relative;
                 
-    
+                .header-container__links-carrito{
+                    margin:auto;
+                    margin-right: 1rem;
+                    font-size:1.5rem;
+                }
+
+                p{
+                    left:2.5rem;
+                    top:.4rem;
+                    font-size:.7rem;
+                }
                 
             }
         }

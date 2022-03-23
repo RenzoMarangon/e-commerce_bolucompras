@@ -1,8 +1,10 @@
 import React from 'react'
-import logo from '../img/logo.png'
+import logo from '../../img/logo.png'
 import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faBars} from '@fortawesome/free-solid-svg-icons'
+import {faCartShopping} from '@fortawesome/free-solid-svg-icons'
+
 const NavBar = () => {
   const abrirMenu=()=>{
     const menu = document.querySelector('.header-container__links')
@@ -14,6 +16,7 @@ const NavBar = () => {
       menu.style.height="0";
     }
   } 
+  
   return (
     <header>
         <div className='header-container'>
@@ -26,10 +29,14 @@ const NavBar = () => {
             </div>
 
             <div className='header-container__links'>
-                <Button className='header-container__links-btn' href="#">Inicio</Button>
-                <Button className='header-container__links-btn' href="#">Ofertas</Button>
-                <Button className='header-container__links-btn' href="#">Categorías</Button>
-            </div>
+              <Button className='header-container__links-btn'>
+                <FontAwesomeIcon icon={faCartShopping} className="header-container__links-carrito" />
+                <p>0</p>
+              </Button>
+              <Button className='header-container__links-btn' href="#">Inicio</Button>
+              <Button className='header-container__links-btn' href="#">Ofertas</Button>
+              <Button className='header-container__links-btn' href="#">Categorías</Button>
+          </div>
         </div>
     </header>
   )
