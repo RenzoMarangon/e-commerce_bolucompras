@@ -1,0 +1,26 @@
+
+.header-container__links-btn{
+    color: black;
+    font-weight: 500;
+
+    .header-container__links-carrito{
+        font-size:1.5rem;
+        
+    }
+}
+
+
+
+
+@media screen and (min-width:451px) {
+    .header-container__links-btn{
+        margin:auto;
+        margin-right: 2rem;
+        .header-container__links-carrito{
+            margin:auto;
+            margin-right: 1rem;
+            font-size:1.5rem;
+        }
+        
+    }
+}

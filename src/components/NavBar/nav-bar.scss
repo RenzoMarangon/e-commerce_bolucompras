@@ -63,10 +63,9 @@
         max-width: 1400px;
         display: flex;
         flex-wrap: wrap;
-        
+        margin: 1rem auto;
         .header-container__logo{
-            margin: 1rem auto;
-            
+            margin: auto 2rem;
             h1{
                 margin: auto 1rem;
             }
@@ -80,15 +79,17 @@
         }
     
         .header-container__links{
-            height: auto;
-            margin:2rem auto;
+            height: 100%;
+            margin: auto;
+            width: 70%;
             flex-direction: row;
+            
+            
             
             .header-container__links-btn{
                 margin:auto;
                 margin-right: 2rem;
                 position:relative;
-                
                 .header-container__links-carrito{
                     margin:auto;
                     margin-right: 1rem;

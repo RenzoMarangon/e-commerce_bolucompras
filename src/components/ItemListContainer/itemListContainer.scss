@@ -1,0 +1,36 @@
+main{
+    .main-container{
+        max-width: 450px;
+        margin: auto;
+        .main-container__item-list-container{
+            margin: auto;
+        }
+    }
+}
+
+@media screen and (min-width:451px) {
+    main{
+        .main-container{
+            max-width: 1440px;
+            
+            .main-container__item-list-container{
+                display: flex;
+                margin: auto;
+                flex-wrap: wrap;
+                align-items: flex-start;
+                justify-content: flex-start;
+               .card-item{
+                   margin-right: 1rem;
+               }
+
+               .main-container__item-list-container__spinner{
+                   margin: auto;
+                   margin-top: 20%;
+                   
+               }
+                
+            }
+        }
+    }
+}
+
