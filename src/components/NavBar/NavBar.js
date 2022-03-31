@@ -9,30 +9,36 @@ import CartWidget from '../CartWidget/CartWidget';
 const NavBar = () => {
 
 
+    /*Mostrar u ocultar los links en pantalla de celular*/
+
+    const [ showLinks, setShowLinks ] = useState(true)
+
+    const abrirMenu=()=>{
+        setShowLinks(!showLinks)
+        const header = document.querySelector('.header-container');
+        setShowLinks ? header.style.height='100%': header.style.height='10vh';
+      }
+  
+
   /*Mostrar u ocultar menu hamburguesa segun el tamaño de la pantalla*/
   const [ showMenu, setShowMenu ] = useState(true);
 
   const showHideMenu =()=>{
     const width = document.body.clientWidth;
     width<=450 ? setShowMenu(true) :  setShowMenu(false);
+    width<=450 && setShowLinks(false);
   }
 
-  useEffect( () =>{
-    showHideMenu();
-  },[])
 
 
-  /*Mostrar u ocultar los links en pantalla de celular*/
-  const abrirMenu=()=>{
-    const menu = document.querySelector('.header-container__links')
-    const alturaMenu = menu.scrollHeight;
-    const alturaActual = menu.clientHeight;
-    if(alturaActual==0){
-      menu.style.height=alturaMenu+"px";
-    }else{
-      menu.style.height="0";
-    }
-  } 
+
+    useEffect( () =>{
+      showHideMenu();
+    },[])
+  
+  
+    useEffect( () =>{
+    },[setShowLinks])
 
   
   
@@ -55,13 +61,13 @@ const NavBar = () => {
 
             </div>
 
-            <div className='header-container__links'>
+            { showLinks && <div className='header-container__links'>
               <CartWidget cartStock={ 0 } />
               <Button className='header-container__links-btn' href="#">Inicio</Button>
               <Button className='header-container__links-btn' href="#">Ofertas</Button>
               <Button className='header-container__links-btn' href="#">Categorías</Button>
+          </div>  }
           
-          </div>
         </div>
     </header>
   )

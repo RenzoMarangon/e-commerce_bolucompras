@@ -1,10 +1,10 @@
 .header-container{
     max-width: 450px;
-    margin: auto;
+    margin: 1rem;
+    height: 10vh;
 
     .header-container__logo{
         display: flex;
-        margin: 1rem;
         
         img{
             height: 50px;
@@ -25,13 +25,10 @@
     }
 
     .header-container__links{
-        
         display: flex;
+
         flex-direction: column;
         align-items: flex-start;
-        margin: 1rem;
-        height: 0;
-        overflow: hidden;
         transition: all .5s ease-in-out;
         .header-container__links-btn{
             color: black;
@@ -61,11 +58,12 @@
 @media screen and (min-width:451px) {
     .header-container{
         max-width: 1400px;
-        display: flex;
-        flex-wrap: wrap;
-        margin: 1rem auto;
+        display: grid;
+        grid-template-areas: "logo ... links";
+        margin:1rem auto;
         .header-container__logo{
-            margin: auto 2rem;
+           
+            grid-area: logo;
             h1{
                 margin: auto 1rem;
             }
@@ -79,10 +77,11 @@
         }
     
         .header-container__links{
+            justify-self: flex-end;
             height: 100%;
-            margin: auto;
-            width: 70%;
+            max-width: 70%;
             flex-direction: row;
+            grid-area: links;
             
             
             
