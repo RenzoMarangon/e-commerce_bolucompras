@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import ItemCount from '../ItemCount/ItemCount';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { Link } from 'react-router-dom';
 
 
 const CardItem = ({ props }) => {
 
   /*Desestructuracion de props*/
-  const { title, description, price, rating, category, image} = props;
+  const { id, title, description, price, rating, category, image} = props;
 
   const { count } = rating;
 
@@ -41,7 +42,9 @@ const CardItem = ({ props }) => {
         <h3>{ title }</h3>
         <p> ARG$ { price*100 }</p>
         <ItemCount stock = { count } />
-        <button onClick={handleClick} className='card-item__container-button'>Agregar al carrito</button>
+        <Link to={`/${category}/${id}`}>
+          <button onClick={handleClick} className='card-item__container-button'>Agregar al carrito</button>
+        </Link>
 
         <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>

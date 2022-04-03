@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import CartWidget from '../CartWidget/CartWidget';
-
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
 
@@ -63,9 +63,19 @@ const NavBar = () => {
 
             { showLinks && <div className='header-container__links'>
               <CartWidget cartStock={ 0 } />
-              <Button className='header-container__links-btn' href="#">Inicio</Button>
-              <Button className='header-container__links-btn' href="#">Ofertas</Button>
-              <Button className='header-container__links-btn' href="#">Categorías</Button>
+              <Button className='header-container__links-btn' href="#">
+                <Link to={'/'} >Inicio</Link>
+              </Button>
+              <Button className='header-container__links-btn' href="#">
+                <Link to={'/Offers'} >Ofertas</Link>
+                </Button>
+              <Button className='header-container__links-btn' href="#">
+                <Link to={'/Categorys'} >Categorías</Link>
+              </Button>
+              <Button className='header-container__links-btn' href="#">
+                <Link to={'/Contact'} >Contacto</Link>
+              </Button>
+
           </div>  }
           
         </div>
