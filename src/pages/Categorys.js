@@ -1,3 +1,4 @@
+import { Skeleton } from '@mui/material';
 import React,{ useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import ItemListContainer from '../components/ItemListContainer/ItemListContainer'
@@ -11,10 +12,8 @@ const Categorys = () => {
     const [ loader, setLoader ] = useState(false);
     const categorysSaved = [];
 
-
     useEffect(()=>{
         getItems();
-        console.log(categorys)
     },[]);
 
 
@@ -26,25 +25,35 @@ const Categorys = () => {
         .then(( products )=>{
             setProducts(products);
             filterByCategorys(products)
-            setLoader(true);
             setCategorys(categorysSaved)
-            
+            setLoader(true);
         })
     }
 
-    const filterByCategorys=( array)=>{
+    const filterByCategorys=( array )=>{
         return array.map(( product )=>{
             !categorysSaved.includes(product.category) && categorysSaved.push(product.category) 
-
         })      
     }
+
+    const skeleton = 
+        <div className='categorys-container__skeleton'>
+            <Skeleton className='skeleton-icon' />
+            <Skeleton className='skeleton-text'  />
+        </div>;
 
   return (
    
     <div className='categorys-container'>
-        {categorys.map((category)=>{
+        {!loader ?  [skeleton, skeleton, skeleton]
+
+        : 
+
+        categorys.map((category)=>{
             return(
-                <Link to={`/${category}`}> {category} </Link>
+                <div className='categorys-container__link'>
+                     <Link to={`/${category}`} > {category}  </Link>
+                </div>
             )
         })}
 

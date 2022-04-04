@@ -25,7 +25,6 @@ const ItemDetailContainer = () =>{
         })
         .then((products) =>{
           setProducts(products)
-
           filterByID(products,id)
           setLoading(true);
         })

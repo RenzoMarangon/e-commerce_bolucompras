@@ -1,6 +1,5 @@
 import React,{ useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import Categorys from '../../pages/Categorys';
 import ItemListContainer from '../ItemListContainer/ItemListContainer';
 const CategoryContainer = () => {
 

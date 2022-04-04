@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import ItemCount from '../ItemCount/ItemCount'
 import { Button } from '@mui/material';
 
@@ -8,9 +8,17 @@ const ItemDetail = ({ props }) => {
     const { title, description, price, rating, image } = props;
     const { count } = rating;
 
-    useEffect(()=>{
-      
-    },[])
+    /*Agregar/quitar stock en ItemCount*/
+    const [ stockCount, setStockCount ] = useState(1);
+
+    const addCount = ( ) => {
+        count>stockCount && setStockCount(stockCount+1);
+    }
+
+    const removeCount = () => {
+        1<stockCount && setStockCount(stockCount-1);
+    }
+
   return (
     <div className='itemDetail'>
         <div className='itemDetail__images'>
@@ -24,7 +32,7 @@ const ItemDetail = ({ props }) => {
                 <p> ${ price*100 } </p>
                 <p>12 cuotas sin interes de ${ (price*100/12).toFixed(2) }</p>
                 { count>3 ? <p className='stock'>stock disponible</p> : <p className='stockOut'>Sin stock</p> }
-                <ItemCount stock={ count } />
+            <ItemCount stock = { stockCount } addCount={ addCount } removeCount={ removeCount } />
             </div>
 
             <div className='itemDetail__buttons'>
