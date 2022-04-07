@@ -1,0 +1,17 @@
+.formContact-container{
+    max-width: 1440px;
+    margin: auto;
+    form{
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        margin: auto;
+        .formContact-container__input{
+            margin-bottom: 1rem;
+            &:last-child{
+
+                margin: auto;
+            }
+        }
+    }
+}

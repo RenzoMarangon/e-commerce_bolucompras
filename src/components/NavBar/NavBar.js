@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import logo from '../../img/logo.png'
 import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faCircleUser  } from '@fortawesome/free-solid-svg-icons'
 import CartWidget from '../CartWidget/CartWidget';
 import { Link } from 'react-router-dom';
+
 
 const NavBar = () => {
 
@@ -61,22 +62,41 @@ const NavBar = () => {
 
             </div>
 
-            { showLinks && <div className='header-container__links'>
-              <CartWidget cartStock={ 0 } />
-              <Button className='header-container__links-btn' href="#">
-                <Link to={'/'} >Inicio</Link>
-              </Button>
-              <Button className='header-container__links-btn' href="#">
-                <Link to={'/Offers'} >Ofertas</Link>
-                </Button>
-              <Button className='header-container__links-btn' href="#">
-                <Link to={'/Categorys'} >Categorías</Link>
-              </Button>
-              <Button className='header-container__links-btn' href="#">
-                <Link to={'/Contact'} >Contacto</Link>
-              </Button>
+            { showLinks && 
+            
+            <div className='header-container__links'>
+              
 
-          </div>  }
+              <Link to={'/Cart'} className='header-container__links-link' >
+                  <CartWidget cartStock={ 0 } className='header-container__links-cartWidget'/>
+              </Link>
+
+
+              <Link to={'/'} className='header-container__links-link' >
+                <Button> Inicio </Button>
+              </Link>
+
+
+              <Link to={'/Offers'} className='header-container__links-link' >
+                  <Button>Ofertas</Button>
+              </Link>
+
+              <Link to={'/Categorys'} className='header-container__links-link' >
+                  <Button>Categorias</Button>
+              </Link>
+
+              <Link to={'/Contact'} className='header-container__links-link' >
+                  <Button>Contacto</Button>
+              </Link>
+
+              <Link to={'/User'} className='header-container__links-link' >
+                  <Button>
+                    <FontAwesomeIcon className='header-container__links-user' icon={ faCircleUser } /> 
+                  </Button>
+              </Link>
+
+            </div>  
+            }
           
         </div>
     </header>

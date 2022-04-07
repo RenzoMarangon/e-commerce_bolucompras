@@ -7,10 +7,8 @@ import { Link } from 'react-router-dom';
 const CartWidget = ({ cartStock }) =>{
     return(
         <Button className='header-container__links-btn'>
-            <Link to={'/Cart'}>
-                <FontAwesomeIcon icon={ faCartShopping } className="header-container__links-carrito" />
-                <p>{cartStock}</p>
-            </Link>
+            <FontAwesomeIcon icon={ faCartShopping } className="header-container__links-carrito" />
+            <p>{cartStock}</p>
         </Button>
     )
 }

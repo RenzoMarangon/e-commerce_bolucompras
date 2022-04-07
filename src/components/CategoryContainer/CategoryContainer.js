@@ -21,7 +21,10 @@ const CategoryContainer = () => {
         })
     }
   return (
+    
     <ItemListContainer listProducts={products} loading={loader}/>
+
+    
   )
 }
 

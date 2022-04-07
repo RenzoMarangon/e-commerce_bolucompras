@@ -9,27 +9,25 @@ import CategoryContainer from './components/CategoryContainer/CategoryContainer'
 import Contact from './pages/Contact';
 import Offers from './pages/Offers'
 import Cart from './pages/Cart';
+import Error from './pages/Error';
 function App() {
 
 
   return (
     <div className='App'>
         <BrowserRouter>
-          <NavBar />
+          <NavBar/>
           <Routes>
-            <Route path='/' element={ <Home />  }/>
-            <Route path='*' element={ <h1>404 ERROR</h1>}/>
+            <Route path='/' element = { <Home />  }/>
+            <Route path='*' element = { <Error /> }/>
             <Route path='/Offers'  element={ <Offers />}/>
             <Route path='/Contact'  element={ <Contact /> }/>
             <Route path='/:category/:id' element={ <ItemDetailContainer /> }/>
             <Route path='/Categorys' element={ <Categorys /> }/>
-            <Route path='/:category' element={ <CategoryContainer /> }/>
-            <Route path='/Cart' element={ <Cart /> }/>
+            <Route path='/Categorys/:category' element={ <CategoryContainer /> }/>
+            <Route path='/Cart' element={ <Cart /> }/>  
           </Routes>
         </BrowserRouter>
-
-
- 
     </div>
     
   );

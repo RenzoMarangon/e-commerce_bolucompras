@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import mockItem from '../../utils/mockItem'
 import ItemDetail from "../ItemDetail/ItemDetail";
 import { useParams } from 'react-router-dom';
+
 const ItemDetailContainer = () =>{
 
 
-    const { id } = useParams();
+    const { id, category } = useParams();
 
     const [ products, setProducts ] = useState([]);
-
-    const [ product, setProduct ] = useState({}) 
 
     const [ loading, setLoading ] = useState(false);
 
@@ -25,22 +23,25 @@ const ItemDetailContainer = () =>{
         })
         .then((products) =>{
           setProducts(products)
-          filterByID(products,id)
+          filterByID(products,id,category)
           setLoading(true);
         })
     }
 
 
-    const filterByID = (products, id ) =>{
-      products.map(( product )=>{
-        product.id == id && setProduct(product)
+    const filterByID = (products, id, category ) =>{
+
+      products.filter(( product )=>{
+        product.id == id & product.category == category && setProducts(product)
       })
+
     }
+
+
 
     return(
         <div className='itemDetailContainer'>
-          
-          {!loading ? <h1>carganding</h1> : <ItemDetail props={ product } />}
+          {!loading ? <h1>carganding</h1> : <ItemDetail props={ products } />}
         </div>
     )
 };

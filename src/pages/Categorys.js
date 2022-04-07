@@ -1,61 +1,83 @@
+import React,{ useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
+
+/*ICONOS*/
 import { Skeleton } from '@mui/material';
-import React,{ useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
-import ItemListContainer from '../components/ItemListContainer/ItemListContainer'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPersonDress, faGem, faPerson, faComputer } from '@fortawesome/free-solid-svg-icons'
+
 
 const Categorys = () => {
 
-
-
-    const [ products, setProducts ] = useState([]);
-    const [ categorys, setCategorys ] = useState([])
     const [ loader, setLoader ] = useState(false);
-    const categorysSaved = [];
 
     useEffect(()=>{
-        getItems();
-    },[]);
-
-
-    const getItems =()=>{
-        fetch('https://fakestoreapi.com/products')
-        .then(( response )=>{
-          return response.json();
-        })
-        .then(( products )=>{
-            setProducts(products);
-            filterByCategorys(products)
-            setCategorys(categorysSaved)
+        setTimeout(()=>{
             setLoader(true);
-        })
-    }
-
-    const filterByCategorys=( array )=>{
-        return array.map(( product )=>{
-            !categorysSaved.includes(product.category) && categorysSaved.push(product.category) 
-        })      
-    }
+        },1000)
+    },[]);
 
     const skeleton = 
         <div className='categorys-container__skeleton'>
-            <Skeleton className='skeleton-icon' />
-            <Skeleton className='skeleton-text'  />
+            <Skeleton/>
+            <Skeleton/>
+            <Skeleton/>
+            <Skeleton/>
         </div>;
 
   return (
    
     <div className='categorys-container'>
-        {!loader ?  [skeleton, skeleton, skeleton]
 
-        : 
 
-        categorys.map((category)=>{
-            return(
-                <div className='categorys-container__link'>
-                     <Link to={`/${category}`} > {category}  </Link>
-                </div>
-            )
-        })}
+        {!loader ?  skeleton
+
+            : 
+
+        <div className='categorys-container__links'>
+            <div className='categorys-container__link'>
+                <Link to={`/Categorys/jewelery`} > 
+                    <Button>
+                        <FontAwesomeIcon icon={ faGem }/>
+                        <p>Joyería</p>
+                    </Button>
+                </Link>
+                
+            </div>
+
+            <div className='categorys-container__link'>
+                <Link to={`/Categorys/women's%20clothing`} > 
+                    <Button>  
+                        <FontAwesomeIcon icon={ faPersonDress }/>
+                        <p>Ropa de Mujer</p>
+                    </Button>
+                </Link>
+                
+            </div>
+
+            <div className='categorys-container__link'>
+                <Link to={`/Categorys/men's%20clothing`} > 
+                    <Button>
+                        <FontAwesomeIcon icon={ faPerson }/>
+                        <p>Ropa de Hombre</p>
+                    </Button>
+                </Link>
+                
+            </div>
+
+            <div className='categorys-container__link'>
+                <Link to={`/Categorys/electronics`} > 
+                    <Button>
+                        <FontAwesomeIcon icon={ faComputer }/> 
+                        <p>Tecnología</p>
+                    </Button>
+                </Link>
+                
+            </div>
+        </div>
+            
+        }
 
         
     </div>
