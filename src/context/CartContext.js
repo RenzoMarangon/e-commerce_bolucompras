@@ -9,7 +9,6 @@ const CartProvider= ({ children }) =>{
     const addItemToCart = (item) =>{
 
         setCartWidgetItems([...cartWidgetItems,item])
-        console.log(cartWidgetItems)
     }
 
     const data = {

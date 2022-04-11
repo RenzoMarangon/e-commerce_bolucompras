@@ -10,7 +10,12 @@ const ItemDetail = ({ props }) => {
 
     
     /*Cart Context*/
-    const { addItemToCart } = useContext(CartContext);
+    const { cartWidgetItems, addItemToCart } = useContext(CartContext);
+
+    const addProductToCartx = (props) => {
+        addItemToCart(props);
+        console.log(cartWidgetItems)
+    }
 
     /*Desestructuracion*/
 
@@ -66,7 +71,7 @@ const ItemDetail = ({ props }) => {
             </div>
 
             <div className='itemDetail__buttons'>
-            <Button className='itemDetail__buttons-btn' onClick={()=>{addItemToCart(props)}}> Agregar al carrito </Button>
+            <Button className='itemDetail__buttons-btn' onClick={addProductToCartx(props)}> Agregar al carrito </Button>
             <Button className='itemDetail__buttons-btn' > <Link to={'/Cart'}>Terminar compra </Link> </Button> 
             </div>
         </div>
