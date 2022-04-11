@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import ItemCount from '../ItemCount/ItemCount';
 import { Link } from 'react-router-dom';
 
 
 const CardItem = ({ props }) => {
 
-  /*UseEffect*/
-
-  useEffect(()=>{
-
-  },[])
 
   /*Desestructuracion de props*/
   const { id, title, description, price, rating, category, image} = props;
@@ -40,7 +35,7 @@ const CardItem = ({ props }) => {
         <p> ARG$ { price*100 }</p>
         <ItemCount stock = { stockCount } addCount={ addCount } removeCount={ removeCount } />
         <Link to={`/${category}/${id}`}>
-          <button  className='card-item__container-button'>Agregar al carrito</button>
+          <button  className='card-item__container-button' >Agregar al carrito</button>
         </Link>
 
         

@@ -1,12 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import ItemCount from '../ItemCount/ItemCount'
 import { Button } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { Link } from 'react-router-dom';
-
+import CartContext from '../../context/CartContext';
 
 const ItemDetail = ({ props }) => {
+
+    
+    /*Cart Context*/
+    const { addItemToCart } = useContext(CartContext);
+
+    /*Desestructuracion*/
 
     const { title, description, price, rating, image } = props;
     const { count } = rating;
@@ -22,9 +28,6 @@ const ItemDetail = ({ props }) => {
         1<stockCount && setStockCount(stockCount-1);
     }
 
-    const mostrar = () =>{
-        console.log(stockCount)
-    }
 
     /*Alerta del boton 'agregar al carrito'*/
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -63,8 +66,8 @@ const ItemDetail = ({ props }) => {
             </div>
 
             <div className='itemDetail__buttons'>
-            <Button className='itemDetail__buttons-btn' onClick={handleClick}> Agregar al carrito </Button>
-            <Button className='itemDetail__buttons-btn' onClick={mostrar}> <Link to={'/Cart'}>Terminar compra </Link> </Button> 
+            <Button className='itemDetail__buttons-btn' onClick={()=>{addItemToCart(props)}}> Agregar al carrito </Button>
+            <Button className='itemDetail__buttons-btn' > <Link to={'/Cart'}>Terminar compra </Link> </Button> 
             </div>
         </div>
 
