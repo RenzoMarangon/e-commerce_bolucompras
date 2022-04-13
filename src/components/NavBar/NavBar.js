@@ -36,10 +36,6 @@ const NavBar = () => {
     useEffect( () =>{
       showHideMenu();
     },[])
-  
-  
-    useEffect( () =>{
-    },[setShowLinks])
 
   
   
@@ -66,12 +62,6 @@ const NavBar = () => {
             
             <div className='header-container__links'>
               
-
-              {/* <Link className='header-container__links-link' > */}
-                  <CartWidget className='header-container__links-cartWidget'/>
-              {/* </Link> */}
-
-
               <Link to={'/'} className='header-container__links-link' >
                 <Button> Inicio </Button>
               </Link>
@@ -88,6 +78,10 @@ const NavBar = () => {
               <Link to={'/Contact'} className='header-container__links-link' >
                   <Button>Contacto</Button>
               </Link>
+
+              <div className='header-container__links-link' >
+                  <CartWidget className=' header-container__links-cartWidget'/>
+              </div>
 
               <Link to={'/Cart'} className='header-container__links-link' >
                   <Button>

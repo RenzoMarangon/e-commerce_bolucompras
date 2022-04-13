@@ -16,7 +16,7 @@ const CardItem = ({ props }) => {
 
       <div className='card-item__container'>
         <h3>{ title }</h3>
-        <p> ARG$ { price*100 }</p>
+        <p> ARG$ { price }</p>
         <Link to={`/${category}/${id}`}>
           <Button className='card-item__container-button' >Agregar al carrito</Button>
         </Link>

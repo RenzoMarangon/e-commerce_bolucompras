@@ -30,15 +30,13 @@ const ItemDetail = ({ props }) => {
 
     const addProductToCart = (props) => {
         setOpen(true); /*Muestra la alerta*/
-        addItemToCart({...props , stockCount: count });     
+        addItemToCart({...props , stockCount: stockToAdd });     
         setProductAdded(true);
-        console.log({cartWidgetItems}) 
+
     }
 
-    useEffect(()=>{
-        
-    },[cartWidgetItems])
-
+    /*Guardar cantidad de productos a comprar*/
+    const [ stockToAdd, setStockCount ] = useState(1);
 
     /*Alerta del boton 'agregar al carrito'*/
     const [open, setOpen] = React.useState(false);
@@ -66,11 +64,17 @@ const ItemDetail = ({ props }) => {
             <div className='itemDetail__info'>
                 <h2>{ title }</h2>
                 <p> { description } </p>
-                <p> ${ price*100 } </p>
-                <p>12 cuotas sin interes de ${ (price*100/12).toFixed(2) }</p>
+                <p> ${ price } </p>
+                <p>12 cuotas sin interes de ${ (price/12).toFixed(2) }</p>
                 
                 { count>3 ? <p className='stock'>stock disponible</p> : <p className='stockOut'>Sin stock</p> }
-                <ItemCount stock = { count }  />
+
+                {  !productAdded && 
+                
+                    <ItemCount stock = { count } addStock = { setStockCount } count = { stockToAdd }  />
+                }
+       
+
             </div>
 
             <div className='itemDetail__buttons'>

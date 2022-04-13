@@ -24,6 +24,8 @@ const CartProvider= ({ children }) =>{
             !cartWidgetItems.includes(item) && setCartWidgetItems([...cartWidgetItems,item]);
         }
 
+
+
     }
 
     const isInCart = ( id ) =>{
@@ -31,20 +33,29 @@ const CartProvider= ({ children }) =>{
     }
 
     const removeCartItem = (id) => {
-        return cartWidgetItems.find(( item )  => item.id !== id )
+        setCartWidgetItems( cartWidgetItems.filter(( item )  => item.id !== id ) ) 
     }
 
     const clearCartWidget = () => {
         setCartWidgetItems([]);
     }
 
+    const totalAddCartItemCount = () => {
+        return cartWidgetItems.reduce( ( acum, item ) => acum = acum + (item.stockCount * item.price), 0 )
+    }
+
+    const cartItemCount = () => {
+        return cartWidgetItems.reduce( ( acum, item ) =>  acum += item.stockCount, 0 )
+    }
 
     const data = {
         cartWidgetItems,
         addItemToCart,
         clearCartWidget,
         removeCartItem,
-        isInCart
+        isInCart,
+        cartItemCount,
+        totalAddCartItemCount
     }
 
     return(
