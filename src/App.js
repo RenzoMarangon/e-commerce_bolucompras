@@ -11,6 +11,9 @@ import Offers from './pages/Offers'
 import Cart from './pages/Cart';
 import Error from './pages/Error';
 import { CartProvider } from './context/CartContext';
+
+
+
 function App() {
   return (
     <div className='App'>

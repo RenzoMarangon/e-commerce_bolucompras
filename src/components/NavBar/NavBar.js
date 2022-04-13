@@ -67,9 +67,9 @@ const NavBar = () => {
             <div className='header-container__links'>
               
 
-              <Link to={'/Cart'} className='header-container__links-link' >
-                  <CartWidget cartStock={ 0 } className='header-container__links-cartWidget'/>
-              </Link>
+              {/* <Link className='header-container__links-link' > */}
+                  <CartWidget className='header-container__links-cartWidget'/>
+              {/* </Link> */}
 
 
               <Link to={'/'} className='header-container__links-link' >
@@ -89,7 +89,7 @@ const NavBar = () => {
                   <Button>Contacto</Button>
               </Link>
 
-              <Link to={'/User'} className='header-container__links-link' >
+              <Link to={'/Cart'} className='header-container__links-link' >
                   <Button>
                     <FontAwesomeIcon className='header-container__links-user' icon={ faCircleUser } /> 
                   </Button>

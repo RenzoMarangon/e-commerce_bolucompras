@@ -4,16 +4,47 @@ const CartContext = createContext();
 
 const CartProvider= ({ children }) =>{
 
+
+
     const [ cartWidgetItems , setCartWidgetItems ] = useState([]);
 
     const addItemToCart = (item) =>{
+        
+        if( isInCart( item.id ) ){  
 
-        setCartWidgetItems([...cartWidgetItems,item])
+            const itemDuplicated = cartWidgetItems.find(( itemFind ) => itemFind.id === item.id);
+            const { stockCount } = itemDuplicated;
+
+            itemDuplicated.stockCount = item.stockCount + stockCount;
+
+            setCartWidgetItems( cartWidgetItems )
+
+        } else {
+
+            !cartWidgetItems.includes(item) && setCartWidgetItems([...cartWidgetItems,item]);
+        }
+
     }
+
+    const isInCart = ( id ) =>{
+        return  cartWidgetItems.some(( item ) => item.id === id )
+    }
+
+    const removeCartItem = (id) => {
+        return cartWidgetItems.find(( item )  => item.id !== id )
+    }
+
+    const clearCartWidget = () => {
+        setCartWidgetItems([]);
+    }
+
 
     const data = {
         cartWidgetItems,
-        addItemToCart
+        addItemToCart,
+        clearCartWidget,
+        removeCartItem,
+        isInCart
     }
 
     return(

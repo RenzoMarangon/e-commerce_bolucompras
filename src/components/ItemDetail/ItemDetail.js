@@ -1,57 +1,60 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import ItemCount from '../ItemCount/ItemCount'
 import { Button } from '@mui/material';
-import MuiAlert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import { Link } from 'react-router-dom';
 import CartContext from '../../context/CartContext';
 
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 const ItemDetail = ({ props }) => {
-
-    
-    /*Cart Context*/
-    const { cartWidgetItems, addItemToCart } = useContext(CartContext);
-
-    const addProductToCartx = (props) => {
-        addItemToCart(props);
-        console.log(cartWidgetItems)
-    }
 
     /*Desestructuracion*/
 
-    const { title, description, price, rating, image } = props;
+    const {id, title, description, price, rating, image } = props;
     const { count } = rating;
 
-    /*Agregar/quitar stock en ItemCount*/
-    const [ stockCount, setStockCount ] = useState(1);
+    /*Hook que revisa si el producto se agregó un item al carrito*/
+    const [ productAdded, setProductAdded ] = useState(false);
 
-    const addCount = ( ) => {
-        count>stockCount && setStockCount(stockCount+1);
+    /*Cart Context*/
+    const { cartWidgetItems, addItemToCart } = useContext(CartContext);
+
+        
+    /*Funcion para añadir el producto al array*/
+
+    const addProductToCart = (props) => {
+        setOpen(true); /*Muestra la alerta*/
+        addItemToCart({...props , stockCount: count });     
+        setProductAdded(true);
+        console.log({cartWidgetItems}) 
     }
 
-    const removeCount = () => {
-        1<stockCount && setStockCount(stockCount-1);
-    }
+    useEffect(()=>{
+        
+    },[cartWidgetItems])
 
 
     /*Alerta del boton 'agregar al carrito'*/
-    const Alert = React.forwardRef(function Alert(props, ref) {
-        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-        });
-    
-        const [open, setOpen] = useState(false);
-    
-        const handleClick = () => {
-        setOpen(true);
-        };
-    
-        const handleClose = (event, reason) => {
+    const [open, setOpen] = React.useState(false);
+
+
+    const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
-            return;
+        return;
         }
-    
+
         setOpen(false);
-        };
+    };
+
+
+
+
 
   return (
     <div className='itemDetail'>
@@ -65,22 +68,46 @@ const ItemDetail = ({ props }) => {
                 <p> { description } </p>
                 <p> ${ price*100 } </p>
                 <p>12 cuotas sin interes de ${ (price*100/12).toFixed(2) }</p>
+                
                 { count>3 ? <p className='stock'>stock disponible</p> : <p className='stockOut'>Sin stock</p> }
-
-            <ItemCount stock = { stockCount } addCount={ addCount } removeCount={ removeCount } />
+                <ItemCount stock = { count }  />
             </div>
 
             <div className='itemDetail__buttons'>
-            <Button className='itemDetail__buttons-btn' onClick={addProductToCartx(props)}> Agregar al carrito </Button>
-            <Button className='itemDetail__buttons-btn' > <Link to={'/Cart'}>Terminar compra </Link> </Button> 
+               {
+                   !productAdded ? (
+
+                    <Button className='itemDetail__buttons-btn' onClick={()=>{ addProductToCart(props); }} > 
+                        Agregar al carrito 
+                    </Button>
+
+                   ) : (
+
+                    <>
+                    <Button className='itemDetail__buttons-btn' > 
+                        <Link to={'/'}> 
+                            Seguir comprando
+                        </Link> 
+                    </Button> 
+
+                    <Button className='itemDetail__buttons-btn' > 
+                        <Link to={'/Cart'}> 
+                            Terminar compra 
+                        </Link> 
+                    </Button> 
+                    </>
+                   )
+               }
             </div>
+
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={'success'} sx={{ width: '100%' }}>
+                    ¡El producto se agregó correctamente al carrito!
+                </Alert>
+            </Snackbar>
         </div>
 
-        <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-              El producto se agregó correctamente al carrito
-            </Alert>
-        </Snackbar>
+        
     </div>
   )
 }
