@@ -2,6 +2,8 @@ import React,{ useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 
 import { Button } from '@mui/material';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const FormContact = () => {
 
@@ -14,7 +16,7 @@ const FormContact = () => {
             <TextField className='formContact-container__input' id="outlined-asunto-input" label="Asunto" type="text" required />
             <TextField className='formContact-container__input' id="outlined-email-input" label="Mail" type="email" autoComplete="current-email" required />
             <TextField className='formContact-container__input' id="outlined-asunto-input" label="Asunto" type="text" required />
-            <Button className='formContact-container__input' type='submit'>Enviar </Button>
+            <Button startIcon={ <FontAwesomeIcon icon={ faPaperPlane } /> }  className='formContact-container__input' type='submit'>Enviar </Button>
             
         </form>
     </div>

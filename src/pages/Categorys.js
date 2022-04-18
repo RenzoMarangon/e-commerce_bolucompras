@@ -37,7 +37,7 @@ const Categorys = () => {
 
         <div className='categorys-container__links'>
             <div className='categorys-container__link'>
-                <Link to={`/Categorys/jewelery`} > 
+                <Link to={`/Categorys/Joyeria`} > 
                     <Button>
                         <FontAwesomeIcon icon={ faGem }/>
                         <p>Joyería</p>
@@ -47,7 +47,7 @@ const Categorys = () => {
             </div>
 
             <div className='categorys-container__link'>
-                <Link to={`/Categorys/women's%20clothing`} > 
+                <Link to={`/Categorys/Ropa%20para%20mujer`} > 
                     <Button>  
                         <FontAwesomeIcon icon={ faPersonDress }/>
                         <p>Ropa de Mujer</p>
@@ -57,7 +57,7 @@ const Categorys = () => {
             </div>
 
             <div className='categorys-container__link'>
-                <Link to={`/Categorys/men's%20clothing`} > 
+                <Link to={`/Categorys/Ropa%20para%20hombre`} > 
                     <Button>
                         <FontAwesomeIcon icon={ faPerson }/>
                         <p>Ropa de Hombre</p>
@@ -67,7 +67,7 @@ const Categorys = () => {
             </div>
 
             <div className='categorys-container__link'>
-                <Link to={`/Categorys/electronics`} > 
+                <Link to={`/Categorys/Tecnologia`} > 
                     <Button>
                         <FontAwesomeIcon icon={ faComputer }/> 
                         <p>Tecnología</p>

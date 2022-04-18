@@ -7,7 +7,7 @@ const CardItem = ({ props }) => {
 
 
   /*Desestructuracion de props*/
-  const { id, title, description, price, rating, category, image} = props;
+  const { id, title, description, price, stock, category, image} = props;
 
   return (
     
@@ -18,7 +18,7 @@ const CardItem = ({ props }) => {
         <h3>{ title }</h3>
         <p> ARG$ { price }</p>
         <Link to={`/${category}/${id}`}>
-          <Button className='card-item__container-button' >Agregar al carrito</Button>
+          <Button  className='card-item__container-button' >Agregar al carrito</Button>
         </Link>
 
         

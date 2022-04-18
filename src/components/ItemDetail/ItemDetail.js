@@ -15,10 +15,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const ItemDetail = ({ props }) => {
 
     /*Desestructuracion*/
-
-    const {id, title, description, price, rating, image } = props;
-    const { count } = rating;
-
+    const {id, title, description, price, stock, image } = props;
+    
     /*Hook que revisa si el producto se agregó un item al carrito*/
     const [ productAdded, setProductAdded ] = useState(false);
 
@@ -67,11 +65,11 @@ const ItemDetail = ({ props }) => {
                 <p> ${ price } </p>
                 <p>12 cuotas sin interes de ${ (price/12).toFixed(2) }</p>
                 
-                { count>3 ? <p className='stock'>stock disponible</p> : <p className='stockOut'>Sin stock</p> }
+                { stock>3 ? <p className='stock'>stock disponible</p> : <p className='stockOut'>Sin stock</p> }
 
                 {  !productAdded && 
                 
-                    <ItemCount stock = { count } addStock = { setStockCount } count = { stockToAdd }  />
+                    <ItemCount stock = { stock } addStock = { setStockCount } count = { stockToAdd }  />
                 }
        
 

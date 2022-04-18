@@ -43,11 +43,11 @@
     }
 
     .card-item__container-button{
-        background-color: #ff6625;
+        background-color: var(--green);
         transition:all .5s ease-in-out;
 
         &:hover{
-            background-color: #ff6625;
+            background-color: var(--darkGreen);
             transform:scale(1.1);
             transition:all .5s ease-in-out;
         }
