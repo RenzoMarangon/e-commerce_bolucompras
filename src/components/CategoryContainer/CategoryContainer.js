@@ -1,7 +1,7 @@
 import React,{ useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import ItemListContainer from '../ItemListContainer/ItemListContainer';
-import db from '../../firebase';
+import db from '../../utils/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 
 
@@ -12,13 +12,13 @@ const CategoryContainer = () => {
     const [ products, setProducts ] = useState([])
     const [ loader, setLoader ] = useState(false)
 
-        useEffect(()=>{
-            getElements().then(( listProducts )=>{
-                setProducts(listProducts);
-                setLoader( true );
-                setProducts( filterByCategory(listProducts,category) ) ;
-            })
-        },[])
+    useEffect(()=>{
+        getElements().then(( listProducts )=>{
+            setProducts(listProducts);
+            setLoader( true );
+            setProducts( filterByCategory(listProducts,category) ) ;
+        })
+    },[])
 
     const getElements = async() =>{
         const itemCollection = collection(db, 'productos');
@@ -39,8 +39,6 @@ const CategoryContainer = () => {
 
         
     }
-
-  
 
         // fetch(`https://fakestoreapi.com/products/category/${category}`)
         // .then((response)=>{

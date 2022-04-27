@@ -1,11 +1,18 @@
+/*HOOKS*/
 import React, { useState, useContext, useEffect } from 'react'
-import ItemCount from '../ItemCount/ItemCount'
-import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
 import CartContext from '../../context/CartContext';
 
+/*Material UI*/
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { Button } from '@mui/material';
+
+/*Componentes*/
+import { Link } from 'react-router-dom';
+import ItemCount from '../ItemCount/ItemCount'
+
+
+
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -14,18 +21,15 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const ItemDetail = ({ props }) => {
 
-    /*Desestructuracion*/
     const {id, title, description, price, stock, image } = props;
+    const { cartWidgetItems, addItemToCart } = useContext(CartContext);
+
     
     /*Hook que revisa si el producto se agregó un item al carrito*/
     const [ productAdded, setProductAdded ] = useState(false);
 
-    /*Cart Context*/
-    const { cartWidgetItems, addItemToCart } = useContext(CartContext);
 
-        
-    /*Funcion para añadir el producto al array*/
-
+    /*Añadir un producto al array*/
     const addProductToCart = (props) => {
         setOpen(true); /*Muestra la alerta*/
         addItemToCart({...props , stockCount: stockToAdd });     
@@ -38,13 +42,10 @@ const ItemDetail = ({ props }) => {
 
     /*Alerta del boton 'agregar al carrito'*/
     const [open, setOpen] = React.useState(false);
-
-
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
         return;
         }
-
         setOpen(false);
     };
 

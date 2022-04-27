@@ -3,7 +3,7 @@ import CartContext from '../context/CartContext'
 import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import db from '../firebase';
+import db from '../utils/firebase';
 import  { addDoc, collection, getDocs } from 'firebase/firestore';
 import { async } from '@firebase/util';
 

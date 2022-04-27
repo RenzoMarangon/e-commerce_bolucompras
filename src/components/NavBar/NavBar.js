@@ -1,19 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import logo from '../../img/logo.png'
 import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faCircleUser  } from '@fortawesome/free-solid-svg-icons'
 import CartWidget from '../CartWidget/CartWidget';
 import { Link } from 'react-router-dom';
-
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import LoginContext from '../../context/LoginContext'
+import { collection, getDocs } from 'firebase/firestore';
+import db from '../../utils/firebase';
+import UserMenu from '../UserMenu/UserMenu';
+import UserLoginByMail from '../UserLoginByMail/UserLoginByMail';
 
 const NavBar = () => {
 
 
-    /*Mostrar u ocultar los links en pantalla de celular*/
+
+    const { userProvider, setUserProvider } = useContext(LoginContext);
+
+    const [ userData, setUSerData ] = useState((''));
 
     const [ showLinks, setShowLinks ] = useState(true)
+    
+    useEffect( () =>{
+      
+      getUser()
+      showHideMenu();
 
+    },[])
+
+
+    /*Mostrar u ocultar los links en pantalla de celular*/
     const abrirMenu=()=>{
         setShowLinks(!showLinks)
         const header = document.querySelector('.header-container');
@@ -21,29 +38,47 @@ const NavBar = () => {
       }
   
 
-  /*Mostrar u ocultar menu hamburguesa segun el tamaño de la pantalla*/
-  const [ showMenu, setShowMenu ] = useState(true);
+    /*Mostrar u ocultar menu hamburguesa segun el tamaño de la pantalla*/
+    const [ showMenu, setShowMenu ] = useState(true);
 
-  const showHideMenu =()=>{
-    const width = document.body.clientWidth;
-    width<=450 ? setShowMenu(true) :  setShowMenu(false);
-    width<=450 && setShowLinks(false);
-  }
+    const showHideMenu =()=>{
+      const width = document.body.clientWidth;
+      width<=450 ? setShowMenu(true) :  setShowMenu(false);
+      width<=450 && setShowLinks(false);
+    }
 
+    const getUser = () => {
+      const auth = getAuth()
+      onAuthStateChanged( auth, ( user ) => {
+       if( user != null){
+          showUser(user.email)
+       } 
 
+      })
+    }
 
+    const showUser = async( id ) => {
+      const auth = getAuth();
+      const usersCollection = collection(db, 'users');
+      const usersDocs = await getDocs( usersCollection )
 
-    useEffect( () =>{
-      showHideMenu();
-    },[])
+      usersDocs.docs.forEach(( user )=>{
+        if( user.data().mail == id ){
+          const userData = user.data();
 
-  
+          setUserProvider(userData);
+
+          console.log(userData)
+        }
+      })
+    }
+
   
   return (
 
     
     <header >
-        
+
         <div className='header-container'>
             <div className='header-container__logo'>
             
@@ -83,11 +118,14 @@ const NavBar = () => {
                   <CartWidget className=' header-container__links-cartWidget'/>
               </div>
 
-              <Link to={'/Cart'} className='header-container__links-link' >
+              <div className='header-container__links-link' >
                   <Button>
-                    <FontAwesomeIcon className='header-container__links-user' icon={ faCircleUser } /> 
+                    {/* <FontAwesomeIcon className='header-container__links-user' icon={ faCircleUser } />  */}
+                    <UserMenu >
+                      <UserLoginByMail />
+                    </UserMenu>
                   </Button>
-              </Link>
+              </div>
 
             </div>  
             }
