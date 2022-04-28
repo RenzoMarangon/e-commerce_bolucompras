@@ -1,7 +1,7 @@
 /*HOOKS*/
 import React,{ useState, useContext, useEffect } from 'react'
 import LoginContext from '../../context/LoginContext'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 /*Firebase*/
 import db,{ app } from '../../utils/firebase';
@@ -10,14 +10,14 @@ import { where, query, collection, getDocs } from 'firebase/firestore';
 
 
 /*Material UI*/
-import { Button, Alert } from '@mui/material';
+import { Button, Alert, TextField, Divider } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 
 
 const UserLoginByMail = ({setLoged}) => {
 
-    const navigate = useNavigate()
+
+    const [errorMsg, setErrorMsg] = useState(false)
 
     const { userProvider, setUserProvider } = useContext(LoginContext);
 
@@ -63,11 +63,12 @@ const UserLoginByMail = ({setLoged}) => {
 
             setLoged(true);
 
+            setUserProvider()
+
         })
         .catch((error) => {
-            console.log(error.code)
-            console.log(error.message)
-            });
+            setErrorMsg(true);
+        });
     }
 
 
@@ -83,7 +84,8 @@ const UserLoginByMail = ({setLoged}) => {
             if (user.id == id ){
                 setUserProvider({
                     name:user.data().name,
-                    mail:user.data().mail
+                    mail:user.data().mail,
+                    image:user.data().image
                 })
 
                 setAlertContent({
@@ -102,6 +104,8 @@ const UserLoginByMail = ({setLoged}) => {
           ...inputValue,
           [name]:value,
         })
+
+        console.log(inputValue)
       }
 
     /*Alerta del boton 'agregar al carrito'*/
@@ -117,22 +121,26 @@ const UserLoginByMail = ({setLoged}) => {
 
 return (
     <>
-    <form onSubmit={ userLoginByMail } >
-        <input type='email' placeholder='Mail' name='mail' onChange={inputEnter} value={inputValue.mail} required />
-        <input type='password' placeholder='Password' name='password' onChange={inputEnter} value={inputValue.password} required />
-        <Button type='submit'>
-            Iniciar Sesión
-        </Button>
-        
-    </form>
+        <form className='userLogin-form' onSubmit={ userLoginByMail } >
+            <TextField className='userLogin-form__input' label="Mail" type="email" name='mail' onChange={inputEnter} value={inputValue.mail}  required />
+            <TextField className='userLogin-form__input' label="Contraseña" type="password" name='password' onChange={inputEnter} value={inputValue.password}  required />
+            
+            { errorMsg == true &&
+                <Alert severity="warning">¡Usuario o contraseña inválidos!</Alert>
+            }
+            
+            <Button type='submit'>
+                Iniciar Sesión
+            </Button>
 
-    <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-    <Alert onClose={handleClose} severity={alertContent.severity} sx={{ width: '100%' }}>
-        {alertContent.content}
-    </Alert>
-    </Snackbar>
+            <Divider />
+
+            <Link to={'/UserRegister'} className='userLogin-__register-button'>
+                <Button>No tengo una cuenta</Button>
+            </Link>
+        </form>
     </>
 )
 }
 
-export default UserLoginByMail
+export default UserLoginByMail;

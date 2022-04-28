@@ -38,7 +38,7 @@ const CartWidget = () =>{
             MenuListProps={{
                 'aria-labelledby': 'basic-button',
             }}>
-                <div>
+                <div className='cartWidget-container'>
                     {
                         cartWidgetItems<=0 ? (
                             <p>No hay productos en el carrito</p>
@@ -49,7 +49,7 @@ const CartWidget = () =>{
                             {
                             cartWidgetItems.map(( cartWidgetItem )=>{
                                 return(
-                                    <div key={cartWidgetItem.id} className='header-container__menu-item' onClick={handleCloseCartWidget}>
+                                    <div key={cartWidgetItem.id} className='cartWidget-container__item' onClick={handleCloseCartWidget}>
                                         <p>{cartWidgetItem.title}</p>
                                         <p>Price: {cartWidgetItem.price}</p>
                                         <p>Stock:{cartWidgetItem.stockCount}</p>
