@@ -4,17 +4,13 @@ import LoginContext from '../../context/LoginContext';
 
 /*import firebase*/
 import db,{ app } from '../../utils/firebase';
-import { userRegister } from '../../utils/firebaseFunctions';
 import { doc, setDoc, collection } from 'firebase/firestore';
-import { getAuth, createUserWithEmailAndPassword, userRegByMail  } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword  } from 'firebase/auth';
 
-/*Componentes*/
-import Home from '../../pages/Home';
 
 /*Material UI*/
 import { Button, Alert } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 
 
 const UserRegisterByMail = () => {
@@ -57,16 +53,15 @@ const UserRegisterByMail = () => {
                 .then(() => {
                     const userBuyer = {
                         name:inputValue.name,
-                        mail:inputValue.mail,            
+                        mail:inputValue.mail,
+                        image:' '            
                     };
                     
                     /*Guardo los datos en el context*/
-                    setUserProvider({   
-                        userBuyer
-                    });
+                    setUserProvider( userBuyer) ;
 
-                    /*Guardo sus datos en un documento dentro de fireStore*/
-                    userRegister(userBuyer.mail,userBuyer);
+
+                    userRegister( email, userBuyer );
 
                     setAlertContent({
                         content:'¡Registro exitoso!',
@@ -105,6 +100,13 @@ const UserRegisterByMail = () => {
         }
     }
 
+    /*Guardo los datos de la consola en fireStore*/
+    const userRegister = async( userId, userData ) => {
+
+        const userCollection = collection(db,'users');
+        const userDoc = doc( db, 'users', userId )
+        const addUserToFirestore = await setDoc( userDoc, userData )
+    }
 
     /*Reviso el valor del input cada vez que se ingresa una tecla*/
     const inputEnter = (e) => {

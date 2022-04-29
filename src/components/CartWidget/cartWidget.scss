@@ -33,3 +33,13 @@
         
     }
 }
+
+.cartWidget-container{
+    display:flex; 
+    padding:.2rem;
+    flex-direction:column;
+    align-items:center;
+    .cartWidget-container__item{
+
+    }
+}

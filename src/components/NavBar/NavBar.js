@@ -11,6 +11,8 @@ import { collection, getDocs } from 'firebase/firestore';
 import db from '../../utils/firebase';
 import UserMenu from '../UserMenu/UserMenu';
 import UserLoginByMail from '../UserLoginByMail/UserLoginByMail';
+import UserLoginByGoogle from '../UserLoginByGoogle/UserLoginByGoogle'
+import UserLogOut from '../UserLogOut/UserLogOut';
 
 const NavBar = () => {
 
@@ -18,7 +20,7 @@ const NavBar = () => {
 
     const { userProvider, setUserProvider } = useContext(LoginContext);
 
-    const [ userData, setUSerData ] = useState((''));
+    const [ userData, setUSerData ] = useState(false);
 
     const [ showLinks, setShowLinks ] = useState(true)
     
@@ -52,6 +54,7 @@ const NavBar = () => {
       onAuthStateChanged( auth, ( user ) => {
        if( user != null){
           showUser(user.email)
+          setUSerData(true)
        } 
 
       })
@@ -67,8 +70,6 @@ const NavBar = () => {
           const userData = user.data();
 
           setUserProvider(userData);
-
-          console.log(userData)
         }
       })
     }
@@ -113,20 +114,46 @@ const NavBar = () => {
               <Link to={'/Contact'} className='header-container__links-link' >
                   <Button>Contacto</Button>
               </Link>
+              {
+                userData && 
+                  <div className='header-container__links-link' >
+                    <CartWidget className=' header-container__links-cartWidget'/>
+                  </div>
+              }
 
-              <div className='header-container__links-link' >
-                  <CartWidget className=' header-container__links-cartWidget'/>
-              </div>
 
               <div className='header-container__links-link' >
                   <Button>
-                    {/* <FontAwesomeIcon className='header-container__links-user' icon={ faCircleUser } />  */}
-                    <UserMenu >
-                      <UserLoginByMail />
-                    </UserMenu>
+
+                  <UserMenu >
+                      
+                        
+                        {
+                          userData ? (
+                          <div>
+                            <p> { `${userProvider.name}` }</p>
+                            <Link to={'/UserSettings'}>
+                              <Button> Configuración </Button>
+                            </Link>
+                            <UserLogOut />
+                          </div>
+                          ) : (
+                          <div>
+                            <UserLoginByMail />
+                            <UserLoginByGoogle />
+                          </div>
+                          )
+
+                        }
+                      
+                      
+                                                
+  
+                  </UserMenu>
+                  
+
                   </Button>
               </div>
-
             </div>  
             }
           

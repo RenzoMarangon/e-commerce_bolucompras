@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { Avatar, Button } from '@mui/material';
-const UserMenu = ({ children }) => {
+import { Avatar } from '@mui/material';
+import LoginContext from '../../context/LoginContext'
 
+
+const UserMenu = ( { children } ) => {
+
+    const { userProvider } = useContext(LoginContext);
+    
+    console.log(userProvider.name.length)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -14,8 +19,15 @@ const UserMenu = ({ children }) => {
     };
 
   return (
-    <>
-    <Avatar onClick={handleClick} />
+    <div className='userMenu-container'>
+
+    {
+      userProvider.image.length>1 ? (
+        <img className='userMenu-container__profile-picture' src={ userProvider.image }  onClick={handleClick}/>
+      ) : (
+        <Avatar onClick={handleClick} />
+      )
+    }
     <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -50,10 +62,11 @@ const UserMenu = ({ children }) => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+
         { children }
         
       </Menu>
-      </>
+      </div>
   )
 }
 

@@ -1,6 +1,9 @@
 /*HOOKS*/
 import React, { useState, useContext, useEffect } from 'react'
 import CartContext from '../../context/CartContext';
+import LoginContext from '../../context/LoginContext';
+import { useNavigate } from 'react-router-dom';
+
 
 /*Material UI*/
 import Snackbar from '@mui/material/Snackbar';
@@ -10,6 +13,10 @@ import { Button } from '@mui/material';
 /*Componentes*/
 import { Link } from 'react-router-dom';
 import ItemCount from '../ItemCount/ItemCount'
+
+/*Firebase*/
+import db,{ app } from '../../utils/firebase';
+import { doc, setDoc, collection } from 'firebase/firestore';
 
 
 
@@ -24,18 +31,38 @@ const ItemDetail = ({ props }) => {
     const {id, title, description, price, stock, image } = props;
     const { cartWidgetItems, addItemToCart } = useContext(CartContext);
 
-    
+    const { userProvider } = useContext(LoginContext);
+
+    const [ newCartItemsCollection, setNewCartItemsCollection ] = useState({});
+
+    const navigate = useNavigate();
+
+
     /*Hook que revisa si el producto se agregó un item al carrito*/
     const [ productAdded, setProductAdded ] = useState(false);
 
 
-    /*Añadir un producto al array*/
-    const addProductToCart = (props) => {
-        setOpen(true); /*Muestra la alerta*/
-        addItemToCart({...props , stockCount: stockToAdd });     
-        setProductAdded(true);
+    useEffect(()=>{
+        if(cartWidgetItems.length>0){
+            itemRegister( userProvider.mail, cartWidgetItems )
+        }
 
-    }
+    },[cartWidgetItems])
+
+    const addProductToCart = (props) =>{
+        const userProviderToString = `${userProvider.name}`;
+        
+        if( userProviderToString.length > 1 )
+        {
+            /*Muestra la alerta*/
+            setOpen(true)
+            addItemToCart({...props , stockCount: stockToAdd })
+            setProductAdded(true)
+        }else{
+            navigate('/UserRegister')
+        }
+    } 
+        
 
     /*Guardar cantidad de productos a comprar*/
     const [ stockToAdd, setStockCount ] = useState(1);
@@ -48,6 +75,23 @@ const ItemDetail = ({ props }) => {
         }
         setOpen(false);
     };
+
+
+    /*Guardo los datos de la consola en fireStore*/
+    const itemRegister = async( userID, cartWidgetItems ) => {
+ 
+        const arrayToObject = Object.assign({}, cartWidgetItems);
+        const itemCollection = collection(db,'carritos');
+        const itemDoc = doc( db, 'carritos', userID )
+        const addItemToFirestore = await setDoc( itemDoc, arrayToObject )
+        console.log('registro etsitoso')
+    }
+
+    const most = () => {
+        const arrayToObject = Object.assign({}, cartWidgetItems);
+
+        console.log(arrayToObject)
+    }
 
 
 
@@ -80,10 +124,13 @@ const ItemDetail = ({ props }) => {
                {
                    !productAdded ? (
 
+                    <>
                     <Button className='itemDetail__buttons-btn' onClick={()=>{ addProductToCart(props); }} > 
                         Agregar al carrito 
                     </Button>
-
+                    <Button onClick={ most } > Moxtrar </Button>
+                    </>
+                    
                    ) : (
 
                     <>

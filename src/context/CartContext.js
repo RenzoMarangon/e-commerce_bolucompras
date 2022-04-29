@@ -9,6 +9,17 @@ const CartProvider= ({ children }) =>{
     const [ cartWidgetItems , setCartWidgetItems ] = useState([]);
 
     const addItemToCart = (item) =>{
+
+        const { category, description, id, image, price, stockCount, title } = item;
+        const itemCustom = {
+            category: category,
+            description: description,
+            id: id,
+            image: image,
+            price: price,
+            stockCount: stockCount,
+            title:title,
+        }
         
         if( isInCart( item.id ) ){  
 
@@ -20,9 +31,13 @@ const CartProvider= ({ children }) =>{
             setCartWidgetItems( cartWidgetItems )
 
         } else {
-
-            !cartWidgetItems.includes(item) && setCartWidgetItems([...cartWidgetItems,item]);
+            
+            /*Convierto el objeto que traigo de FireStore en un objeto con menos datos*/
+    
+            !cartWidgetItems.includes(item) && setCartWidgetItems([...cartWidgetItems,itemCustom]);
         }
+
+
 
 
 

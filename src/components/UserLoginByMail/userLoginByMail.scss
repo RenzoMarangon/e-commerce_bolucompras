@@ -1,0 +1,15 @@
+.userLogin-form{
+    display:flex;
+    flex-direction: column;
+    padding:.1rem;
+    
+    .userLogin-form__input{
+        margin-bottom:.4rem;
+
+    }
+
+    .userLogin-__register-button{
+        align-self:center;
+        margin-top:.4rem;
+    }
+}

@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { getAuth, signOut } from 'firebase/auth'
 import '../../utils/firebase';
-import MuiAlert from '@mui/material/Alert';
 import { Button, Alert } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
+import LoginContext from '../../context/LoginContext'
+import { useNavigate } from 'react-router-dom';
+import Home from '../../pages/Home'
 
 const UserLogOut = () => {
+
+    const { userProvider, setUserProvider } = useContext(LoginContext);
+
+    const navigate = useNavigate();
 
     /*Guardo lo que voy a escribir en la alerta*/
     const [ alertContent, setAlertContent ] = useState({
@@ -27,6 +33,16 @@ const UserLogOut = () => {
                 severity:'warning',
             })
 
+            setUserProvider({
+                name:'',
+                mail:'',
+                image:'',
+            })
+            navigate('/')
+            window.location.reload(false)
+
+
+
         }).catch(( error ) => {
             setAlertContent({
                 content:error,
@@ -44,9 +60,6 @@ const UserLogOut = () => {
         setOpen(false);
     };
     
-    const asd = ( ) =>{
-        setOpen(true)
-    }
 
   return (
     <div className='userSignOut-container'>
