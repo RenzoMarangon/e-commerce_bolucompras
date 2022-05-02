@@ -114,12 +114,11 @@ const NavBar = () => {
               <Link to={'/Contact'} className='header-container__links-link' >
                   <Button>Contacto</Button>
               </Link>
-              {
-                userData && 
-                  <div className='header-container__links-link' >
-                    <CartWidget className=' header-container__links-cartWidget'/>
-                  </div>
-              }
+        
+              <div className='header-container__links-link' >
+                <CartWidget className=' header-container__links-cartWidget'/>
+              </div>
+            
 
 
               <div className='header-container__links-link' >

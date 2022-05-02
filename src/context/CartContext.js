@@ -70,7 +70,8 @@ const CartProvider= ({ children }) =>{
         removeCartItem,
         isInCart,
         cartItemCount,
-        totalAddCartItemCount
+        totalAddCartItemCount,
+        setCartWidgetItems
     }
 
     return(

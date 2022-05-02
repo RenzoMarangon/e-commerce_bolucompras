@@ -8,7 +8,6 @@ const UserMenu = ( { children } ) => {
 
     const { userProvider } = useContext(LoginContext);
     
-    console.log(userProvider.name.length)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -32,6 +31,7 @@ const UserMenu = ( { children } ) => {
         anchorEl={anchorEl}
         id="account-menu"
         open={open}
+        key={'menux'}
         onClose={handleClose}
         PaperProps={{
           elevation: 0,
@@ -50,7 +50,7 @@ const UserMenu = ( { children } ) => {
               display: 'block',
               position: 'absolute',
               top: 0,
-              right: 14,
+              right: 0,
               width: 10,
               height: 10,
               bgcolor: 'background.paper',

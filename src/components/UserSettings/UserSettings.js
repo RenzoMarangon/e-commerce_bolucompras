@@ -15,7 +15,7 @@ const UserSettings = () => {
             <p>{ mail }</p>
 
             <ImageUploader />
-            
+
         </div>
 
     </div>

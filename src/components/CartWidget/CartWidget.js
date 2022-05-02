@@ -1,30 +1,60 @@
-import React,{ useContext } from 'react';
+import React,{ useContext, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import { faCartShopping, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CartContext from '../../context/CartContext'
 
-
 import Menu from '@mui/material/Menu';
 import { Link } from 'react-router-dom';
 
+
+/*Firebase*/
+import db,{ app } from '../../utils/firebase';
+import { collection, getDocs, query, where  } from 'firebase/firestore';
+import { async } from '@firebase/util';
+
+import LoginContext from '../../context/LoginContext';
+
+
 const CartWidget = () =>{
 
+    const { userProvider } = useContext(LoginContext);
+
+
+
     /*Cart context*/
-    const { cartWidgetItems, removeCartItem, cartItemCount } = useContext(CartContext);
+    const { cartWidgetItems, removeCartItem, cartItemCount, setCartWidgetItems, clearCartWidget } = useContext(CartContext);
 
     /*Menu de CartWidget*/
-
     const [anchorCartWidget, setAnchorCartWidget] = React.useState(null);
     const openCartWidget = Boolean(anchorCartWidget);
 
+
     const handleOpenCartWidget = (event) => {
         setAnchorCartWidget(event.currentTarget);
+        getWidget()
     };
 
     const handleCloseCartWidget = () => {
         setAnchorCartWidget(null);
     };
+
+
+    const getWidget = async() => {
+        const cartsCollection = collection(db, 'carritos');
+        const cartsList = await getDocs(cartsCollection)
+        
+        cartsList.docs.forEach(( cart )=>{
+            if( cart.id == userProvider.mail ){
+
+                const cartProductsArray = Object.values( cart.data() );
+        
+                setCartWidgetItems( cartProductsArray )
+
+            }
+
+        })
+    }   
 
     return(
         <>

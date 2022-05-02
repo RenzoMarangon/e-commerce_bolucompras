@@ -33,9 +33,9 @@ const ItemDetail = ({ props }) => {
 
     const { userProvider } = useContext(LoginContext);
 
-    const [ newCartItemsCollection, setNewCartItemsCollection ] = useState({});
 
-    const navigate = useNavigate();
+    const [ spinner, setSpinner ] = useState(false);
+
 
 
     /*Hook que revisa si el producto se agregó un item al carrito*/
@@ -43,7 +43,7 @@ const ItemDetail = ({ props }) => {
 
 
     useEffect(()=>{
-        if(cartWidgetItems.length>0){
+        if(cartWidgetItems.length>0 && userProvider.mail.length>1){
             itemRegister( userProvider.mail, cartWidgetItems )
         }
 
@@ -51,16 +51,13 @@ const ItemDetail = ({ props }) => {
 
     const addProductToCart = (props) =>{
         const userProviderToString = `${userProvider.name}`;
-        
-        if( userProviderToString.length > 1 )
-        {
-            /*Muestra la alerta*/
-            setOpen(true)
-            addItemToCart({...props , stockCount: stockToAdd })
-            setProductAdded(true)
-        }else{
-            navigate('/UserRegister')
-        }
+        setSpinner(true);
+        addItemToCart({...props , stockCount: stockToAdd })
+
+        setProductAdded(true)
+        setSpinner(false);
+        /*Muestra la alerta*/
+        setOpen(true)
     } 
         
 
@@ -77,6 +74,8 @@ const ItemDetail = ({ props }) => {
     };
 
 
+
+
     /*Guardo los datos de la consola en fireStore*/
     const itemRegister = async( userID, cartWidgetItems ) => {
  
@@ -85,13 +84,10 @@ const ItemDetail = ({ props }) => {
         const itemDoc = doc( db, 'carritos', userID )
         const addItemToFirestore = await setDoc( itemDoc, arrayToObject )
         console.log('registro etsitoso')
+
     }
 
-    const most = () => {
-        const arrayToObject = Object.assign({}, cartWidgetItems);
 
-        console.log(arrayToObject)
-    }
 
 
 
@@ -112,9 +108,11 @@ const ItemDetail = ({ props }) => {
                 
                 { stock>3 ? <p className='stock'>stock disponible</p> : <p className='stockOut'>Sin stock</p> }
 
-                {  !productAdded && 
-                
-                    <ItemCount stock = { stock } addStock = { setStockCount } count = { stockToAdd }  />
+                {  
+
+                    !productAdded && !spinner && <ItemCount stock = { stock } addStock = { setStockCount } count = { stockToAdd } />  
+                    
+
                 }
        
 
@@ -124,12 +122,19 @@ const ItemDetail = ({ props }) => {
                {
                    !productAdded ? (
 
-                    <>
-                    <Button className='itemDetail__buttons-btn' onClick={()=>{ addProductToCart(props); }} > 
-                        Agregar al carrito 
-                    </Button>
-                    <Button onClick={ most } > Moxtrar </Button>
-                    </>
+                    spinner ? (
+                        <>
+                            <p>Expiner</p>
+                        </>
+                    ):(
+                        <>
+                        <Button className='itemDetail__buttons-btn' onClick={()=>{ addProductToCart(props); }} > 
+                            Agregar al carrito 
+                        </Button>
+
+                        </>
+                    )
+
                     
                    ) : (
 
