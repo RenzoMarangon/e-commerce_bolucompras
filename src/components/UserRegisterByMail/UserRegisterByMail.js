@@ -1,10 +1,11 @@
 /*HOOKS*/
 import React,{ useState, useContext, useEffect } from 'react'
 import LoginContext from '../../context/LoginContext';
+import CartContext from '../../context/CartContext';
 
 /*import firebase*/
 import db,{ app } from '../../utils/firebase';
-import { doc, setDoc, collection } from 'firebase/firestore';
+import { doc, setDoc, collection, getDocs } from 'firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword  } from 'firebase/auth';
 
 
@@ -16,6 +17,9 @@ import Snackbar from '@mui/material/Snackbar';
 const UserRegisterByMail = () => {
 
     const { userProvider, setUserProvider } = useContext(LoginContext);
+
+    const { cartWidgetItems, totalAddCartItemCount, addItemToCart } = useContext(CartContext);
+
 
     /*Guardo el valor de los input*/
     const [ inputValue, setInputValue ] = useState({
@@ -72,6 +76,10 @@ const UserRegisterByMail = () => {
                         
                     },1500)
 
+                    if( totalAddCartItemCount() > 1 ) {
+                        itemRegister( email )
+                    }
+
                 })
                 .catch((error) => {
                     /*Pregunto si la contraseña es debil*/
@@ -106,6 +114,34 @@ const UserRegisterByMail = () => {
         const userCollection = collection(db,'users');
         const userDoc = doc( db, 'users', userId )
         const addUserToFirestore = await setDoc( userDoc, userData )
+    }
+
+
+    /*Guardo los datos de la consola en fireStore*/
+    const itemRegister = async( userID ) => {
+
+        const cartsCollection = collection(db, 'carritos');
+        const cartsList = await getDocs(cartsCollection)
+
+        cartsList.docs.map(( cart )=>{
+            
+            if( cart.id == userID ){
+                const objetosGuardados = Object.values( cart.data() ) 
+                console.log(objetosGuardados)
+                objetosGuardados.map(( item )=>{
+                
+                addItemToCart( item )
+                })
+            }
+        })
+        
+        const itemsListToObject = Object.assign({},cartWidgetItems);
+
+        const itemCollection = collection(db,'carritos');
+        const itemDoc = doc( db, 'carritos', userID )
+        const addItemToFirestore = await setDoc( itemDoc, itemsListToObject )
+
+
     }
 
     /*Reviso el valor del input cada vez que se ingresa una tecla*/

@@ -7,13 +7,13 @@ import { Button } from '@mui/material';
 import { getDocs, doc, collection, setDoc,  } from "firebase/firestore"
 
 
+
 const UserLoginByGoogle = () => {
 
-    const {userProvider, setUserProvider } = useContext(LoginContext);
+    const { setUserProvider } = useContext(LoginContext);
 
-    const { cartWidgetItems, totalAddCartItemCount, setCartWidgetItems, clearCartWidget } = useContext(CartContext);
+    const { cartWidgetItems, totalAddCartItemCount, addItemToCart } = useContext(CartContext);
 
-    const [ itemsInCart, setItemsInCart ] = useState([]);
 
 
      const googleAuth = async() => {
@@ -34,8 +34,7 @@ const UserLoginByGoogle = () => {
         userRegister(email, us)
 
         if( totalAddCartItemCount() > 1 ) {
-          console.log(email)
-          itemRegister( email, cartWidgetItems )
+          itemRegister( email )
         }
 
 
@@ -50,50 +49,42 @@ const UserLoginByGoogle = () => {
       console.log('registro etsitoso')
     }
 
-
-  /*Traigo lo que ya este guardado en fireStore*/
-
-
-
-
   /*Guardo los datos de la consola en fireStore*/
-  const itemRegister = async( userID, cartWidgetItems ) => {
+  const itemRegister = async( userID ) => {
 
     const cartsCollection = collection(db, 'carritos');
     const cartsList = await getDocs(cartsCollection)
 
-    const arrayItemsInCart = []
-    
-    cartsList.docs.forEach(( cart )=>{
-        if( cart.id == userProvider.mail ){
-
-          arrayItemsInCart.concat( Object.values( cart.data() ));
+    cartsList.docs.map(( cart )=>{
+      
+        if( cart.id == userID ){
+          const objetosGuardados = Object.values( cart.data() ) 
+          console.log(objetosGuardados)
+          objetosGuardados.map(( item )=>{
+            
+            addItemToCart( item )
+          })
         }
     })
-
-    console.log(arrayItemsInCart)
-    const newCartList = arrayItemsInCart.concat( cartWidgetItems )
-
-    const arrayToObject = Object.assign({}, newCartList);
-
     
+    const itemsListToObject = Object.assign({},cartWidgetItems);
 
     const itemCollection = collection(db,'carritos');
     const itemDoc = doc( db, 'carritos', userID )
-    const addItemToFirestore = await setDoc( itemDoc, arrayToObject )
-
-    console.log('registro etsitoso')
+    const addItemToFirestore = await setDoc( itemDoc, itemsListToObject )
 
   }
 
- 
-
-
 
   return (
-    <>
-      <Button onClick={ googleAuth }> Ingresar con Google </Button>
-    </>
+    <div className='google-button-container'>
+      
+      <Button className='google-button' onClick={ googleAuth } > 
+        <img src='./images/google-brands.svg' />
+        Google 
+      </Button>
+
+    </div>
   )
 }
 

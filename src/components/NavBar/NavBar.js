@@ -140,6 +140,9 @@ const NavBar = () => {
                           <div>
                             <UserLoginByMail />
                             <UserLoginByGoogle />
+                            <Link to={'/UserRegister'} className='userLogin-__register-button'>
+                                <Button>No tengo una cuenta</Button>
+                            </Link>
                           </div>
                           )
 

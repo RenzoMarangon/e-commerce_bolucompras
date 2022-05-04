@@ -2,30 +2,29 @@
 import React,{ useState, useContext, useEffect } from 'react'
 import LoginContext from '../../context/LoginContext'
 import { useNavigate, Link } from 'react-router-dom';
+import CartContext from '../../context/CartContext';
+
 
 /*Firebase*/
 import db,{ app } from '../../utils/firebase';
 import { signInWithEmailAndPassword, getAuth,  } from 'firebase/auth'
-import { where, query, collection, getDocs } from 'firebase/firestore';
+import { where, query, collection, getDocs, setDoc, doc } from 'firebase/firestore';
 
 
 /*Material UI*/
 import { Button, Alert, TextField, Divider } from '@mui/material';
-import Snackbar from '@mui/material/Snackbar';
 
 
-const UserLoginByMail = ({setLoged}) => {
-
-
-    const [errorMsg, setErrorMsg] = useState(false)
+const UserLoginByMail = () => {
 
     const { userProvider, setUserProvider } = useContext(LoginContext);
+
+    const { cartWidgetItems, addItemToCart } = useContext(CartContext);
 
     const [ inputValue, setInputValue ] = useState({
         name:'',
         mail:'',
-        image:'',
-        password:''
+
     });
 
     /*Guardo lo que voy a escribir en la alerta*/
@@ -33,13 +32,6 @@ const UserLoginByMail = ({setLoged}) => {
         content:'',
         severity:'success',
     })
-
-    useEffect(()=>{
-        if(alertContent.content.length>1){
-            setOpen(true);
-        }
-
-    },[alertContent])
     
 
     const userLoginByMail    = (e) => {
@@ -56,46 +48,58 @@ const UserLoginByMail = ({setLoged}) => {
             // Signed in
             userExist( email ) 
 
-            setAlertContent({
-                content:'¡Registro exitoso!',
-                severity:'success',
-            })
-
-            setLoged(true);
-
-            setUserProvider()
-
         })
         .catch((error) => {
-            setErrorMsg(true);
+            console.log(error)
         });
     }
 
 
 
     const userExist = async( id ) =>{
-        const usersColl = collection(db,'users')
-        const q = query(usersColl, where('mail', '==', id));
-        const getUsers = await getDocs( q );
-        
-        
-        getUsers.docs.map(( user )=>{
+        const usersColl = collection(db,'users');
+        const usersList = await getDocs( usersColl );
 
-            if (user.id == id ){
-                setUserProvider({
-                    name:user.data().name,
-                    mail:user.data().mail,
-                    image:user.data().image
-                })
+        let userData = false;
 
-                setAlertContent({
-                    content:'¡Registro exitoso!',
-                    severity:'success',
-                })
-
-
+        usersList.docs.forEach((user)=>{
+            if( user.id == id ){
+               const us = user.data();
+                setUserProvider( us )
+                userData=true;
             }
         })
+
+
+        userData && itemRegister(id);
+
+    }
+
+      /*Guardo los datos de la consola en fireStore*/
+    const itemRegister = async( userID ) => {
+
+        const cartsCollection = collection(db, 'carritos');
+        const cartsList = await getDocs(cartsCollection)
+    
+        cartsList.docs.map(( cart )=>{
+          
+            if( cart.id == userID ){
+              const objetosGuardados = Object.values( cart.data() ) 
+              console.log(objetosGuardados)
+              objetosGuardados.map(( item )=>{
+                
+                addItemToCart( item )
+              })
+            }
+        })
+        
+        const itemsListToObject = Object.assign({},cartWidgetItems);
+    
+        const itemCollection = collection(db,'carritos');
+        const itemDoc = doc( db, 'carritos', userID )
+        const addItemToFirestore = await setDoc( itemDoc, itemsListToObject )
+    
+
     }
 
     const inputEnter = (e) => {
@@ -104,18 +108,10 @@ const UserLoginByMail = ({setLoged}) => {
           ...inputValue,
           [name]:value,
         })
-
-        console.log(inputValue)
       }
 
-    /*Alerta del boton 'agregar al carrito'*/
-    const [open, setOpen] = useState(false);
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-        return;
-        }
-        setOpen(false);
-    };
+
+
     
     
 
@@ -125,19 +121,12 @@ return (
             <TextField className='userLogin-form__input' label="Mail" type="email" name='mail' onChange={inputEnter} value={inputValue.mail}  required />
             <TextField className='userLogin-form__input' label="Contraseña" type="password" name='password' onChange={inputEnter} value={inputValue.password}  required />
             
-            { errorMsg == true &&
-                <Alert severity="warning">¡Usuario o contraseña inválidos!</Alert>
-            }
-            
             <Button type='submit'>
                 Iniciar Sesión
             </Button>
 
             <Divider />
 
-            <Link to={'/UserRegister'} className='userLogin-__register-button'>
-                <Button>No tengo una cuenta</Button>
-            </Link>
         </form>
     </>
 )
