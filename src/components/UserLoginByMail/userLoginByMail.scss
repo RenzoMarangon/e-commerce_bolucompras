@@ -1,10 +1,11 @@
 .userLogin-form{
     display:flex;
     flex-direction: column;
-    padding:.1rem;
+    align-items:center;
     
     .userLogin-form__input{
-        margin-bottom:.4rem;
+        margin:.4rem 0;
+        width:94%;
 
     }
 

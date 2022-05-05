@@ -10,6 +10,7 @@ const FormContact = () => {
 
   return (
     <div className='formContact-container'>
+        <div className='formContact-container__background'>  </div>
         <form>
             <TextField className='formContact-container__input' id="outlined-nombre-input" label="Nombre" type="text" autoComplete="current-name" required />
             <TextField className='formContact-container__input' id="outlined-apellido-input" label="Apellido" type="text" autoComplete="current-apellido" />
@@ -17,8 +18,9 @@ const FormContact = () => {
             <TextField className='formContact-container__input' id="outlined-email-input" label="Mail" type="email" autoComplete="current-email" required />
             <TextField className='formContact-container__input' id="outlined-asunto-input" label="Asunto" type="text" required />
             <Button startIcon={ <FontAwesomeIcon icon={ faPaperPlane } /> }  className='formContact-container__input' type='submit'>Enviar </Button>
-            
         </form>
+
+        
     </div>
   )
 }

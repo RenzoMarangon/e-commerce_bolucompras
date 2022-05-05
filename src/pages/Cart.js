@@ -4,8 +4,8 @@ import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import db from '../utils/firebase';
-import  { addDoc, collection, getDocs } from 'firebase/firestore';
-import { async } from '@firebase/util';
+import  { addDoc, collection } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 
 
 const Cart = () => {
@@ -125,7 +125,9 @@ const Cart = () => {
                 placeholder='Mail' required 
               />
                 
-              <Button type='submit'> terminar compra </Button>
+              <Link to={'/CartCheckout'}>
+                <Button type='submit'> terminar compra </Button>
+              </Link>
             </form>
             )}
 

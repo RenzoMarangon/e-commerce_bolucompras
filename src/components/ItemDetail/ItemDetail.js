@@ -2,16 +2,17 @@
 import React, { useState, useContext, useEffect } from 'react'
 import CartContext from '../../context/CartContext';
 import LoginContext from '../../context/LoginContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 
 /*Material UI*/
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { Button } from '@mui/material';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+
 
 /*Componentes*/
-import { Link } from 'react-router-dom';
 import ItemCount from '../ItemCount/ItemCount'
 
 /*Firebase*/
@@ -33,10 +34,9 @@ const ItemDetail = ({ props }) => {
 
     const { userProvider } = useContext(LoginContext);
 
-
     const [ spinner, setSpinner ] = useState(false);
 
-
+    const { category } = useParams();
 
     /*Hook que revisa si el producto se agregó un item al carrito*/
     const [ productAdded, setProductAdded ] = useState(false);
@@ -47,6 +47,7 @@ const ItemDetail = ({ props }) => {
             itemRegister( userProvider.mail, cartWidgetItems )
         }
 
+        console.log(category)
     },[cartWidgetItems])
 
     const addProductToCart = (props) =>{
@@ -88,10 +89,11 @@ const ItemDetail = ({ props }) => {
     }
 
 
-
-
-
-
+    /*BreadCrumb*/
+    function handleClickBreadcrumb(event) {
+        event.preventDefault();
+        console.info('You clicked a breadcrumb.');
+      }
 
   return (
     <div className='itemDetail'>
@@ -100,7 +102,26 @@ const ItemDetail = ({ props }) => {
         </div>
 
         <div className='itemDetail__text'>
+            
+            {/*BreadCrumbs*/}
+            <div role="presentation" onClick={handleClickBreadcrumb}>
+            <Breadcrumbs aria-label="breadcrumb">
+                <Link underline="hover" color="inherit" to="/">
+                    Inicio
+                </Link>
+
+                <Link underline="hover" color="inherit" to={`/Categorys/${category}`} >
+                    { category }
+                </Link>
+
+                <Link underline="hover" color="text.primary" to={`/${category}/${id}`} aria-current="page">
+                    { title }
+                </Link>
+            </Breadcrumbs>
+            </div>
+
             <div className='itemDetail__info'>
+
                 <h2>{ title }</h2>
                 <p> { description } </p>
                 <p> ${ price } </p>
@@ -109,15 +130,14 @@ const ItemDetail = ({ props }) => {
                 { stock>3 ? <p className='stock'>stock disponible</p> : <p className='stockOut'>Sin stock</p> }
 
                 {  
-
                     !productAdded && !spinner && <ItemCount stock = { stock } addStock = { setStockCount } count = { stockToAdd } />  
-                    
-
                 }
        
 
             </div>
 
+
+            {/*Botones*/}
             <div className='itemDetail__buttons'>
                {
                    !productAdded ? (

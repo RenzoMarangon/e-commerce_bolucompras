@@ -8,16 +8,16 @@ import CartContext from '../../context/CartContext';
 /*Firebase*/
 import db,{ app } from '../../utils/firebase';
 import { signInWithEmailAndPassword, getAuth,  } from 'firebase/auth'
-import { where, query, collection, getDocs, setDoc, doc } from 'firebase/firestore';
+import {  collection, getDocs, setDoc, doc } from 'firebase/firestore';
 
 
 /*Material UI*/
-import { Button, Alert, TextField, Divider } from '@mui/material';
+import { Button, TextField, Divider } from '@mui/material';
 
 
 const UserLoginByMail = () => {
 
-    const { userProvider, setUserProvider } = useContext(LoginContext);
+    const { setUserProvider } = useContext(LoginContext);
 
     const { cartWidgetItems, addItemToCart } = useContext(CartContext);
 

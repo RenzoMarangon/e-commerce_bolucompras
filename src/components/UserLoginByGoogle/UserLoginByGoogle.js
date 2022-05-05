@@ -80,7 +80,7 @@ const UserLoginByGoogle = () => {
     <div className='google-button-container'>
       
       <Button className='google-button' onClick={ googleAuth } > 
-        <img src='./images/google-brands.svg' />
+        <img src='./images/google.svg' />
         Google 
       </Button>
 

@@ -149,7 +149,7 @@ const CartWidget = () =>{
 
                             <div className='header-container__pay'>
                                 <Button onClick={ handleCloseCartWidget }>
-                                    <Link to='/Cart'>
+                                    <Link to='/CartCheckout'>
                                         Terminar compra
                                     </Link> 
                                 </Button>

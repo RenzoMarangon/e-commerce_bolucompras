@@ -8,14 +8,13 @@ import Categorys from './pages/Categorys';
 import CategoryContainer from './components/CategoryContainer/CategoryContainer';
 import Contact from './pages/Contact';
 import Offers from './pages/Offers'
-import Cart from './pages/Cart';
 import Error from './pages/Error';
 import { CartProvider } from './context/CartContext';
 import { LoginProvider } from './context/LoginContext';
 import UserSettings from './components/UserSettings/UserSettings';
-import LoginPage from './pages/LoginPage';
 import FormContact from './components/FormContact/FormContact'
 import UserRegister from './pages/UserRegister';
+import CartCheckout from './pages/CartCheckout';
 
 function App() {
   return (
@@ -34,6 +33,7 @@ function App() {
                 <Route path='/Categorys/:category' element={ <CategoryContainer /> }/>
                 <Route path='/UserSettings' element={ <UserSettings /> }/>
                 <Route path='/UserRegister' element={ <UserRegister /> }/>
+                <Route path='/CartCheckout' element={ <CartCheckout /> }/>
               </Routes>
             </BrowserRouter>
         </CartProvider>

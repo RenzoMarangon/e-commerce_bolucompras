@@ -1,17 +1,44 @@
 .formContact-container{
     max-width: 1440px;
     margin: auto;
+    position:relative;
+
     form{
         display: flex;
         flex-direction: column;
-        width: 30%;
+        width: 50%;
         margin: auto;
-        .formContact-container__input{
-            margin-bottom: 1rem;
-            &:last-child{
+        align-items:center;
+        padding:.5rem 0;
+        
 
+        .formContact-container__input{
+            width:50%;
+            background:rgba(255, 255, 255, 0.404);
+            margin-bottom: 1rem;
+            border-radius:.5rem;
+            color:black;
+
+
+            &:last-child{
+                color:black;
                 margin: auto;
             }
         }
+
+
     }
+
+    .formContact-container__background{
+        width: 50%;
+        height:100%;
+        background:var(--orange);
+        position:absolute;
+        left:25%;
+        border-radius:1rem;
+        filter:blur(2px);
+        opacity:.5;
+
+    }
+
 }
