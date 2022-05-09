@@ -10,4 +10,11 @@
 @use './components/FormContact/formContact.scss';
 @use './components//UserLoginByMail/userLoginByMail.scss';
 @use './components/UserMenu/userMenu.scss';
-@use './components/UserLoginByGoogle/userLoginByGoogle.scss'
+@use './components/UserLoginByGoogle/userLoginByGoogle.scss';
+@use './scss/pages/cartCheckout.scss';
+@use './scss/pages/userPanel.scss';
+@use './components/UserAsidePanel/userAsidePanel.scss';
+@use './components/UserSettings/userSettings.scss';
+@use './scss/pages/loginPage.scss';
+@use './components/UserRegisterByMail/userRegister.scss';
+@use './scss/pages/userRegisterPage.scss';

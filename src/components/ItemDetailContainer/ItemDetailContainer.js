@@ -1,11 +1,15 @@
+/*HOOKS*/
 import React, { useEffect, useState } from "react";
-import ItemDetail from "../ItemDetail/ItemDetail";
 import { useParams } from 'react-router-dom';
+
+/*Components*/
+import ItemDetail from "../ItemDetail/ItemDetail";
+
+/*Firebase*/
 import db from "../../utils/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 const ItemDetailContainer = () =>{
-
 
     const { id, category } = useParams();
 
@@ -14,6 +18,8 @@ const ItemDetailContainer = () =>{
     const [ loading, setLoading ] = useState(false);
 
     useEffect( () => {
+      /*Obtengo la lista de productos 
+      y los filtro por categoria*/
 
       getProds().then((prods)=>{
         setProducts(prods)
@@ -51,6 +57,7 @@ const ItemDetailContainer = () =>{
 
     const filterByID = (products, id, category ) =>{
 
+      /*Si el ID y la categoria coincide con el producto lo guardo*/
       products.filter(( product )=>{
         product.id == id & product.category == category && setProducts(product)
       })

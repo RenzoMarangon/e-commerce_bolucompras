@@ -1,4 +1,7 @@
+/*HOOKS*/
 import React, { useState } from "react";
+
+/*Material UI*/
 import Button from '@mui/material/Button';
 
 const ItemCount = ({ stock, addStock, count }) =>{

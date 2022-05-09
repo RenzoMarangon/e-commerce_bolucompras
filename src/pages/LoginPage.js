@@ -1,17 +1,32 @@
-import React,{ useState } from 'react';
+import React from 'react';
 import UserLoginByMail from '../components/UserLoginByMail/UserLoginByMail';
-import UserLogOut from '../components/UserLogOut/UserLogOut';
-import UserRegisterByMail from '../components/UserRegisterByMail/UserRegisterByMail';
+import Divider from '@mui/material/Divider';
+import UserLoginByGoogle from '../components/UserLoginByGoogle/UserLoginByGoogle';
+import { Button } from '@mui/material';
+import UserRegister from './UserRegister';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
-  const [ loged, setLoged  ] = useState(false);
+ 
   return (
-    <>
-      <UserRegisterByMail />
-      <UserLoginByMail setLoged={setLoged} />
-      <UserLogOut />
-      {console.log(loged)}
-    </>
+    <div className='loginPage-container'>
+      <h1>Iniciar sesión</h1>
+      <UserLoginByMail  />
+    
+      <div className='divider'>
+        <span className='linea'></span>
+        <p>ó</p>
+        <span className='linea'></span>
+      </div>
+      <UserLoginByGoogle className='google'/>
+
+    <Link to={'/UserRegister'}>
+      <Button>
+        No tengo una cuenta
+      </Button>
+    </Link>
+
+    </div>
   )
 }
 

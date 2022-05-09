@@ -4,59 +4,64 @@ import CartContext from '../../context/CartContext';
 import LoginContext from '../../context/LoginContext';
 import { Link, useParams } from 'react-router-dom';
 
-
 /*Material UI*/
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { Button } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 
-
 /*Componentes*/
 import ItemCount from '../ItemCount/ItemCount'
 
 /*Firebase*/
-import db,{ app } from '../../utils/firebase';
+import db from '../../utils/firebase';
 import { doc, setDoc, collection } from 'firebase/firestore';
-
-
-
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+
 const ItemDetail = ({ props }) => {
 
-    const {id, title, description, price, stock, image } = props;
+    /*Desestructuracion del producto*/
+    const {id, title, description, price, stock, image, prevPrice } = props;
+
+    /*Cart context*/
     const { cartWidgetItems, addItemToCart } = useContext(CartContext);
 
+    /*User context*/
     const { userProvider } = useContext(LoginContext);
-
-    const [ spinner, setSpinner ] = useState(false);
 
     const { category } = useParams();
 
     /*Hook que revisa si el producto se agregó un item al carrito*/
     const [ productAdded, setProductAdded ] = useState(false);
 
+    let offerPercent = (prevPrice/price).toFixed(2)
+    offerPercent = offerPercent.toString().slice(2,5)
 
     useEffect(()=>{
+
+        /*Pregunto si hay items en el carrito y si el usuario esta logueado
+        Si es así, agrego el item a la base de datos*/
+
         if(cartWidgetItems.length>0 && userProvider.mail.length>1){
             itemRegister( userProvider.mail, cartWidgetItems )
+            console.log(cartWidgetItems)
         }
 
-        console.log(category)
     },[cartWidgetItems])
 
+
+
     const addProductToCart = (props) =>{
-        const userProviderToString = `${userProvider.name}`;
-        setSpinner(true);
+
         addItemToCart({...props , stockCount: stockToAdd })
 
         setProductAdded(true)
-        setSpinner(false);
+
         /*Muestra la alerta*/
         setOpen(true)
     } 
@@ -75,34 +80,30 @@ const ItemDetail = ({ props }) => {
     };
 
 
-
-
     /*Guardo los datos de la consola en fireStore*/
     const itemRegister = async( userID, cartWidgetItems ) => {
- 
+
+        /*Como Firebase no me dejaba agregar un array, tuve que
+        convertir el contenido del carrito en una collecion de objetos*/
         const arrayToObject = Object.assign({}, cartWidgetItems);
+
         const itemCollection = collection(db,'carritos');
         const itemDoc = doc( db, 'carritos', userID )
         const addItemToFirestore = await setDoc( itemDoc, arrayToObject )
-        console.log('registro etsitoso')
-
     }
 
 
     /*BreadCrumb*/
     function handleClickBreadcrumb(event) {
         event.preventDefault();
-        console.info('You clicked a breadcrumb.');
       }
 
   return (
     <div className='itemDetail'>
-        <div className='itemDetail__images'>
-            <img src={ image } />
-        </div>
+        
+        <img className='itemDetail__images' src={ image } />
 
         <div className='itemDetail__text'>
-            
             {/*BreadCrumbs*/}
             <div role="presentation" onClick={handleClickBreadcrumb}>
             <Breadcrumbs aria-label="breadcrumb">
@@ -118,62 +119,89 @@ const ItemDetail = ({ props }) => {
                     { title }
                 </Link>
             </Breadcrumbs>
-            </div>
-
+        </div>
+                
             <div className='itemDetail__info'>
-
+                
                 <h2>{ title }</h2>
                 <p> { description } </p>
+                {
+                prevPrice ? ( 
+                <>
+                    <p>${ prevPrice }</p>
+                    <p>{ offerPercent }%</p>
+                </>
+                ) : (
+                    ''
+                )
+                }
                 <p> ${ price } </p>
                 <p>12 cuotas sin interes de ${ (price/12).toFixed(2) }</p>
-                
-                { stock>3 ? <p className='stock'>stock disponible</p> : <p className='stockOut'>Sin stock</p> }
 
-                {  
-                    !productAdded && !spinner && <ItemCount stock = { stock } addStock = { setStockCount } count = { stockToAdd } />  
-                }
-       
 
             </div>
+            
+            { /*Si el producto no está añadido muestro itemCount + boton comprar*/
+            
+            productAdded==false ? (
 
+            <div className='itemDetail__info'>
+                { stock > 3 ? (
+                
+                    <>
+                    <p className='stock'>stock disponible</p> 
 
+                    { !productAdded && <ItemCount stock = { stock } addStock = { setStockCount } count = { stockToAdd } /> }
+
+                    <Button className='itemDetail__buttons-btn' onClick={()=>{ addProductToCart(props); }} > 
+                         Agregar al carrito 
+                    </Button>
+                    </>
+
+                ) : (
+
+                    <Alert variant="filled" severity="error">
+                        Por el momento no tenemos stock.
+                    </Alert>
+                )}
+
+            
+            </div>
+            ) : (
+            <>
             {/*Botones*/}
             <div className='itemDetail__buttons'>
-               {
-                   !productAdded ? (
 
-                    spinner ? (
-                        <>
-                            <p>Expiner</p>
-                        </>
-                    ):(
-                        <>
-                        <Button className='itemDetail__buttons-btn' onClick={()=>{ addProductToCart(props); }} > 
-                            Agregar al carrito 
-                        </Button>
+                <Button className='itemDetail__buttons-btn' > 
+                    <Link to={'/'}> 
+                        Seguir comprando
+                    </Link> 
+                </Button> 
 
-                        </>
-                    )
+                <Button className='itemDetail__buttons-btn' > 
+                {/*Pregunto si el usuario esta logueado, 
+                    sino, el link lo manda a la página de logueo*/}
+                { 
+                    userProvider.mail.length > 1 ?
+                    (
+                    <Link to='/CartCheckout'>
+                        Terminar compra
+                    </Link>
 
-                    
-                   ) : (
-
-                    <>
-                    <Button className='itemDetail__buttons-btn' > 
-                        <Link to={'/'}> 
-                            Seguir comprando
-                        </Link> 
-                    </Button> 
-
-                    <Button className='itemDetail__buttons-btn' > 
-                        <Link to={'/Cart'}> 
-                            Terminar compra 
-                        </Link> 
-                    </Button> 
-                    </>
-                   )
-               }
+                    ) :(
+                    <Link to='/LoginPage'>
+                        Terminar compra
+                    </Link>
+                )}
+                </Button> 
             </div>
+            </>
+            )}
+            
+            
+
+
+
 
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={'success'} sx={{ width: '100%' }}>

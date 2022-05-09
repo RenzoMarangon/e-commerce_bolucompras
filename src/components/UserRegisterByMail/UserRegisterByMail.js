@@ -10,13 +10,13 @@ import { getAuth, createUserWithEmailAndPassword  } from 'firebase/auth';
 
 
 /*Material UI*/
-import { Button, Alert } from '@mui/material';
+import { Button, Alert, TextField } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 
 
 const UserRegisterByMail = () => {
 
-    const { userProvider, setUserProvider } = useContext(LoginContext);
+    const {  setUserProvider } = useContext(LoginContext);
 
     const { cartWidgetItems, totalAddCartItemCount, addItemToCart } = useContext(CartContext);
 
@@ -26,7 +26,11 @@ const UserRegisterByMail = () => {
         name:'',
         mail:'',
         password:'',
-        repeatPassword:''
+        repeatPassword:'',
+        dni:'',
+        direction:'',
+        tel:'',
+        zipcode:''
     });
 
     /*Guardo lo que voy a escribir en la alerta*/
@@ -55,17 +59,21 @@ const UserRegisterByMail = () => {
             /*Registro al usuario en firebase Auth*/
             createUserWithEmailAndPassword(auth, email, password)
                 .then(() => {
-                    const userBuyer = {
+                    const user = {
                         name:inputValue.name,
                         mail:inputValue.mail,
-                        image:' '            
+                        image:' ',            
+                        dni:'',
+                        direction:'',
+                        zipcode:'',
+                        tel:'',
                     };
                     
                     /*Guardo los datos en el context*/
-                    setUserProvider( userBuyer) ;
+                    setUserProvider( user) ;
 
 
-                    userRegister( email, userBuyer );
+                    userRegister( email, user );
 
                     setAlertContent({
                         content:'¡Registro exitoso!',
@@ -164,14 +172,13 @@ const UserRegisterByMail = () => {
     
     
   return (
-    <>
+    <div className='userRegister-container'>
     <form onSubmit={ userRegByMail } className='userRegisterByMail' >
-        <input type='text' placeholder='Nombre' name='name' onChange={inputEnter} value={inputValue.name} required />
-        <input type='email' placeholder='Mail' name='mail' onChange={inputEnter} value={inputValue.mail} required />
-        <input type='password' placeholder='Contraseña' name='password' onChange={inputEnter} value={inputValue.password} required />
-        <input type='password' placeholder='Repetir contraseña' name='repeatPassword' onChange={inputEnter} value={inputValue.repeatPassword} required />
-        
-        <Button type='submit'>
+        <TextField type='text' placeholder='Nombre' name='name' onChange={inputEnter} value={inputValue.name} required />
+        <TextField type='email' placeholder='Mail' name='mail' onChange={inputEnter} value={inputValue.mail} required />
+        <TextField type='password' placeholder='Contraseña' name='password' onChange={inputEnter} value={inputValue.password} required />
+        <TextField type='password' placeholder='Repetir contraseña' name='repeatPassword' onChange={inputEnter} value={inputValue.repeatPassword} required />
+        <Button className='register' type='submit'>
           Registrarse
         </Button>
     </form>
@@ -181,7 +188,7 @@ const UserRegisterByMail = () => {
         {alertContent.content}
     </Alert>
     </Snackbar>
-    </>
+    </div>
   )
 }
 

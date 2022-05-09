@@ -1,0 +1,32 @@
+.userRegister-container{
+    max-width: 1440px;
+    display: flex;
+    flex-direction: column;
+    
+    margin: auto;
+    align-items: center;
+    form{
+        display: flex;
+        flex-direction: column;
+        input{
+            border-radius: .5rem;
+            height: .5rem;
+            margin-bottom: 1rem;
+            
+        }
+
+        fieldset{
+            margin-bottom: 1rem;
+            width: 20rem;
+
+        }
+
+        .register{
+            background-color: var(--orangeLight);
+            color:#fff;
+            font-weight: 600;
+            width: 15rem;
+            margin-left: 2.5rem;
+        }
+    }
+}

@@ -1,9 +1,13 @@
+/*Material UI*/
 import CardItem from '../CardItem/CardItem'
 import CircularProgress from '@mui/material/CircularProgress';
 import { Grid, Skeleton } from '@mui/material';
 
 
 const ItemListContainer = ({ listProducts, loading }) => {
+
+  /*Genero un 'skeleton' para 
+  cuando la página esté cargando*/
 
   const skeleton = 
 
@@ -32,13 +36,16 @@ const ItemListContainer = ({ listProducts, loading }) => {
 
 
   return (
+    
     <main>
- 
+        {/*Si la página está cargando muestro el skeleton,
+        sino muestro el producto*/}
+        
         {!loading ? skeleton : <div className='main-container'>
           <div className='main-container__item-list-container'>
             {listProducts.map(( product ) =>{
               return(
-                 <CardItem key={ product.id } props={ product } />
+                 <CardItem key={ product.id } props={ product }/>
               )
             })}
           </div>

@@ -86,24 +86,15 @@
                 margin:auto;
                 margin-right: 2rem;
                 position:relative;
-
-                p{
-                    left:2.5rem;
-                    top:.4rem;
-                    font-size:.7rem;
-                }
-
-                .header-container__links-user{
-                    font-size:1.8rem;
-                    margin-left: -1rem;
-                    margin: auto;
-                }
                 
             }
 
             .header-container__links-cartWidget{
                 color:#000;
             }
+
+
+
         }
     }
 }
@@ -118,4 +109,8 @@
             }
         }
     }
+}
+
+.header-container__userMenu{
+    background-color: black;
 }

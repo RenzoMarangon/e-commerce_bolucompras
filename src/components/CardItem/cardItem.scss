@@ -8,7 +8,7 @@
     flex-direction: column;
     background-color: #fff;
     padding:.5rem;
-
+    color:#000;
     box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.20);
     -webkit-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.20);
     -moz-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.20);
@@ -18,41 +18,54 @@
     }
 
     .card-item__container{
-        text-align: center;
+       
         margin: auto;
-        margin-top: .5rem;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        
+        padding: 1rem;
+    
+        .price{
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;     
+            margin: 1rem 0;
+
+        }
+        h3{
+            margin:1rem 0;
+        }
+
+        .offer-container{
+            position: relative;
+            display: flex;
+            .prevPrice{
+                text-decoration:line-through;
+                color: #959595;
+            }
+    
+            .offerPercent{
+                color:#696969;
+                position: absolute;
+                top:2.5rem;
+                left: 10rem;
+            }
+            .offer{
+                margin: auto;
+                margin-left: 1rem;
+                background-color: var(--orangeLight);
+                border-radius: .5rem;
+                padding: .1rem;
+                color: #fff;
+                font-size: .8rem;
+            }
+        }
     }
 
     img{
         margin: auto;
-        align-self: center;
-        justify-self: center;
         max-width: 90%;
         height: 50%
     }
-
-    button{
-        
-        color: #fff;
-        border-radius: .5rem;
-    }
-
-    .card-item__container-button{
-        background-color: var(--green);
-        transition:all .5s ease-in-out;
-
-        &:hover{
-            background-color: var(--darkGreen);
-            transform:scale(1.1);
-            transition:all .5s ease-in-out;
-        }
-    }
-    
 }
 
 @media screen and (min-width:451px) {

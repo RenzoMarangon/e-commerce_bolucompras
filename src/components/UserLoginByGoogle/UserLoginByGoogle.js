@@ -46,7 +46,6 @@ const UserLoginByGoogle = () => {
       const userCollection = collection(db,'users');
       const userDoc = doc( db, 'users', userId )
       const addUserToFirestore = await setDoc( userDoc, userData )
-      console.log('registro etsitoso')
     }
 
   /*Guardo los datos de la consola en fireStore*/

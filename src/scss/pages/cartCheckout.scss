@@ -1,0 +1,102 @@
+.cartCheckout-container{
+    max-width: 1440px;
+    margin: auto;
+    border-radius: 1rem;
+    background-color: #fff;
+    padding: 1rem;
+
+    .cartCheckout-container__items{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        
+
+        .cartCheckout-container__items__item{
+            margin: 1rem 0;
+            padding: 1rem;
+            position: relative;
+            -webkit-box-shadow: 0px 9px 6px -11px rgba(0,0,0,0.55); 
+            box-shadow: 0px 9px 6px -11px rgba(0,0,0,0.55);
+            img{
+                height: 10rem;
+                max-width: 12rem;
+                margin: 0;
+            }
+            .item-title{
+                position: absolute;
+                top:4rem;
+                left: 20rem;
+                
+            }
+            .item-stockCount{
+                position: absolute;
+                top:4rem;
+                left: 40rem;
+            }
+            .item-total{
+                position: absolute;
+                top:4rem;
+                left: 55rem;
+                font-weight: 700;
+            }
+
+            .item-delete{
+                font-size: 1.5rem;
+                position: absolute;
+                top:3.5rem;
+                left: 65rem;
+                color:var(--orange)
+            }
+        }
+
+    }
+
+    .cartCheckout-container__description{
+        
+        width: 80%;
+        position: relative;
+
+        .description-product{
+            position: absolute;
+            left: 25rem;
+        }
+        .description-price{
+            position: absolute;
+            left: 48rem;
+        }
+
+        .description-subtotal{
+            left: 64rem;
+            position: absolute;
+        }
+    }
+
+    .cartCheckout-container__total{
+        display: flex;
+        justify-content: end;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-right: 4rem;
+    }
+
+    .finish{
+        color:black;
+        display: flex;
+        justify-content: end;
+        margin-right: 3.5rem;
+        margin-top: .5rem;
+        button{
+            width: 12rem;
+            border-radius: 1rem;
+            background-color: var(--orangeLight);
+            color:#fff;
+            font-weight: 700;
+        }
+    }
+
+    .no-products{
+        text-align: center;
+        font-size: 1.5rem;
+    }
+}

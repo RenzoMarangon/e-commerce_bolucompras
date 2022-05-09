@@ -1,22 +1,29 @@
+/*HOOKS*/
 import React, { useEffect, useState, useContext } from 'react'
-import logo from '../../img/logo.png'
-import Button from '@mui/material/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faCircleUser  } from '@fortawesome/free-solid-svg-icons'
-import CartWidget from '../CartWidget/CartWidget';
 import { Link } from 'react-router-dom';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import LoginContext from '../../context/LoginContext'
-import { collection, getDocs } from 'firebase/firestore';
-import db from '../../utils/firebase';
+
+/*Components*/
+import logo from '../../img/logo.png'
+import CartWidget from '../CartWidget/CartWidget';
 import UserMenu from '../UserMenu/UserMenu';
 import UserLoginByMail from '../UserLoginByMail/UserLoginByMail';
 import UserLoginByGoogle from '../UserLoginByGoogle/UserLoginByGoogle'
 import UserLogOut from '../UserLogOut/UserLogOut';
 
+/*Material UI*/
+import Button from '@mui/material/Button';
+
+/*Font Awesome*/
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faCircleUser  } from '@fortawesome/free-solid-svg-icons'
+
+/*Firebase*/
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import { collection, getDocs } from 'firebase/firestore';
+import db from '../../utils/firebase';
+
 const NavBar = () => {
-
-
 
     const { userProvider, setUserProvider } = useContext(LoginContext);
 
@@ -43,12 +50,16 @@ const NavBar = () => {
     /*Mostrar u ocultar menu hamburguesa segun el tamaño de la pantalla*/
     const [ showMenu, setShowMenu ] = useState(true);
 
+    /*Si el tamaño de la pantalla es menor a 450px 
+    muestro el menu responsive*/
     const showHideMenu =()=>{
       const width = document.body.clientWidth;
       width<=450 ? setShowMenu(true) :  setShowMenu(false);
       width<=450 && setShowLinks(false);
     }
 
+    /*Me fijo si el usuario está logueado
+    si es así guardo los datos*/
     const getUser = () => {
       const auth = getAuth()
       onAuthStateChanged( auth, ( user ) => {
@@ -59,6 +70,10 @@ const NavBar = () => {
 
       })
     }
+
+    /*Busco el usuario en la base de datos
+    y traigo sus datos para guardarlos
+    en el User PRovider*/
 
     const showUser = async( id ) => {
       const auth = getAuth();
@@ -119,41 +134,37 @@ const NavBar = () => {
                 <CartWidget className=' header-container__links-cartWidget'/>
               </div>
             
-
-
               <div className='header-container__links-link' >
-                  <Button>
-
-                  <UserMenu className='header-container__userMenu'>
+                {/*Boton que muestra la imagen de perfil
+                  y contiene el menu del usuario, 
+                  si encuentra los datos del usuario los muestra
+                  sino, muestra un boton de registro y los input para loguearse*/}
+                  
+                  <Button   >
+                  <UserMenu >
                       
-                        
                         {
                           userData ? (
-                          <div>
+                          <div style={ {padding:'5px'}}>
                             <p> { `${userProvider.name}` }</p>
-                            <Link to={'/UserSettings'}>
+                            <Link to={'/UserPanel'}>
                               <Button> Configuración </Button>
                             </Link>
                             <UserLogOut />
                           </div>
                           ) : (
-                          <div>
-                            <UserLoginByMail />
-                            <UserLoginByGoogle />
-                            <Link to={'/UserRegister'} className='userLogin-__register-button'>
-                                <Button>No tengo una cuenta</Button>
+                          <div style={ {padding:'5px'}}>
+                            <Link to={'/LoginPage'} style={{display:'block'}}>
+                                <Button>Iniciar sesión</Button>
+                            </Link>
+
+                            <Link to={'/UserRegister'} >
+                                <Button>Registrarse</Button>
                             </Link>
                           </div>
                           )
-
                         }
-                      
-                      
-                                                
-  
                   </UserMenu>
-                  
-
                   </Button>
               </div>
             </div>  

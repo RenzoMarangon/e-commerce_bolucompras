@@ -1,31 +1,33 @@
+/*HOOK*/
 import React,{ useContext, useEffect, useState } from 'react';
+import LoginContext from '../../context/LoginContext';
+import CartContext from '../../context/CartContext'
+import { Link } from 'react-router-dom';
+
+/*Material UI*/
+import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button';
 import { faCartShopping, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import CartContext from '../../context/CartContext'
-
-import Menu from '@mui/material/Menu';
-import { Link } from 'react-router-dom';
-
 
 /*Firebase*/
-import db,{ app } from '../../utils/firebase';
+import db from '../../utils/firebase';
 import { collection, getDocs, doc, setDoc  } from 'firebase/firestore';
-
-import LoginContext from '../../context/LoginContext';
-
 
 const CartWidget = () =>{
 
+    /*User context*/
     const { userProvider } = useContext(LoginContext);
 
-
+    /*Hook que revisa si el item fue removido del carrito*/
     const [ itemRemoved, setItemRemoved ] = useState( false );
 
     /*Cart context*/
-    const { cartWidgetItems, removeCartItem, cartItemCount, setCartWidgetItems, clearCartWidget } = useContext(CartContext);
+    const { cartWidgetItems, removeCartItem, cartItemCount, setCartWidgetItems } = useContext(CartContext);
 
     useEffect(()=>{
+        /*Si se borra un producto del carrito 
+        entonces lo borra de la base de datos*/
         itemRemoved && deleteItemFromDB();
     },[itemRemoved])
 
@@ -44,6 +46,12 @@ const CartWidget = () =>{
 
 
     const getWidget = async() => {
+
+        /*Busco en la base de datos los carritos,
+        si el mail coincide con el ID de la collecion, lo traigo.
+        Por ultimo guardo lo que traje de la base de datos
+        en el cart context*/
+
         const cartsCollection = collection(db, 'carritos');
         const cartsList = await getDocs(cartsCollection)
         
@@ -55,10 +63,11 @@ const CartWidget = () =>{
                 setCartWidgetItems( cartProductsArray )
 
             }
-
         })
     }   
 
+    /*Borro el producto del cartContext y 
+    le digo al hook que se borró un item*/
     const removeItemFromCart = async( itemID ) =>{
 
         removeCartItem(itemID)
@@ -66,18 +75,23 @@ const CartWidget = () =>{
         setItemRemoved( true );
     }
 
+    /*Cuando se borra el item del Cart Context, 
+    guardo los cambios en la base de datos*/
 
     const deleteItemFromDB = async() =>{
+        /*
         const cartsCollection = collection(db, 'carritos');
         const cartsList = await getDocs(cartsCollection)
-
+        */
+       
         const itemCollection = collection(db,'carritos');
         const itemDoc = doc( db, 'carritos', userProvider.mail )
 
+        /*Traigo el array de productos 
+        y lo convierto en una coleccion de objetos*/
         const cartWidgetItemsToObject = Object.assign({},cartWidgetItems)
 
         const addItemToFirestore = await setDoc( itemDoc, cartWidgetItemsToObject )
-        console.log('item creado')
 
         setItemRemoved( false );
     }
@@ -112,7 +126,7 @@ const CartWidget = () =>{
                     display: 'block',
                     position: 'absolute',
                     top: 0,
-                    right: 0,
+                    right: 4,
                     width: 10,
                     height: 10,
                     bgcolor: 'background.paper',
@@ -127,7 +141,7 @@ const CartWidget = () =>{
                 <div className='cartWidget-container'>
                     {
                         cartWidgetItems<=0 ? (
-                            <p>No hay productos en el carrito</p>
+                            <p className='no-products'>No hay productos en el carrito</p>
 
                         ) : (
 
@@ -136,12 +150,19 @@ const CartWidget = () =>{
                             cartWidgetItems.map(( cartWidgetItem )=>{
                                 return(
                                     <div key={cartWidgetItem.id} className='cartWidget-container__item'>
-                                        <p>{cartWidgetItem.title}</p>
-                                        <p>Price: {cartWidgetItem.price}</p>
-                                        <p>Stock:{cartWidgetItem.stockCount}</p>
-                                        <Button onClick={ () => {  removeItemFromCart( cartWidgetItem.id ) } }> 
-                                            <FontAwesomeIcon icon={ faTrashCan }/>
-                                        </Button>
+
+                                        <div className='cartWidget__item-left'>
+                                            <img src={`${ cartWidgetItem.image }`} />
+                                            <p className='cartWidget__item-title' >{cartWidgetItem.title}</p>
+                                            <p className='cartWidget__item-stock' >{cartWidgetItem.stockCount} { cartWidgetItem.stockCount>1 ? 'unidades' : 'unidad' }</p>
+                                        </div>
+
+                                        <div className='cartWidget__item-right'> 
+                                            <p className='cartWidget__item-price' >${cartWidgetItem.price}</p>
+                                            <Button onClick={ () => {  removeItemFromCart( cartWidgetItem.id ) } }> 
+                                                <FontAwesomeIcon icon={ faTrashCan }/>
+                                            </Button>
+                                        </div>
                                     </div>
                                 )
                             })
@@ -149,9 +170,20 @@ const CartWidget = () =>{
 
                             <div className='header-container__pay'>
                                 <Button onClick={ handleCloseCartWidget }>
-                                    <Link to='/CartCheckout'>
-                                        Terminar compra
-                                    </Link> 
+                                    {/*Pregunto si el usuario esta logueado,
+                                    sino el link lo envia a la pagina para loguearse*/}
+                                    { 
+                                         userProvider.mail.length > 1 ?
+                                         (
+                                            <Link className='header-container__pay-link' to='/CartCheckout'>
+                                                Ver carrito
+                                            </Link>
+                                         ) :(
+                                            <Link className='header-container__pay-link' to='/LoginPage'>
+                                                Ver carrito
+                                            </Link>
+                                         )
+                                    } 
                                 </Button>
                             </div>     
                             </>
