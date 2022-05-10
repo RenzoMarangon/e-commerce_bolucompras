@@ -16,18 +16,14 @@ import { collection, getDocs, doc, setDoc  } from 'firebase/firestore';
 
 const CartWidget = () =>{
 
-    /*User context*/
-    const { userProvider } = useContext(LoginContext);
-
     /*Hook que revisa si el item fue removido del carrito*/
     const [ itemRemoved, setItemRemoved ] = useState( false );
 
     const [ itemAdded, setItemAdded ] = useState( false );
 
-
-    /*Cart context*/
     const { cartWidgetItems, removeCartItem, cartItemCount, setCartWidgetItems } = useContext(CartContext);
 
+    const { userProvider } = useContext(LoginContext);
 
     useEffect(()=>{
         /*Si se borra un producto del carrito 
@@ -85,10 +81,6 @@ const CartWidget = () =>{
     guardo los cambios en la base de datos*/
 
     const deleteItemFromDB = async() =>{
-        /*
-        const cartsCollection = collection(db, 'carritos');
-        const cartsList = await getDocs(cartsCollection)
-        */
        
         const itemCollection = collection(db,'carritos');
         const itemDoc = doc( db, 'carritos', userProvider.mail )

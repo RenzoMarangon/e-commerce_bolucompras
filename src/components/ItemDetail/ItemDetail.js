@@ -25,13 +25,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const ItemDetail = ({ props }) => {
 
-    /*Desestructuracion del producto*/
     const {id, title, description, price, stock, image, prevPrice } = props;
 
-    /*Cart context*/
     const { cartWidgetItems, addItemToCart,} = useContext(CartContext);
 
-    /*User context*/
     const { userProvider } = useContext(LoginContext);
 
     const { category } = useParams();
@@ -39,7 +36,7 @@ const ItemDetail = ({ props }) => {
     /*Hook que revisa si el producto se agregó un item al carrito*/
     const [ productAdded, setProductAdded ] = useState(false);
 
-
+    /*Saco el porcentaje de oferta*/
     let offerPercent = (prevPrice/price).toFixed(2)
     offerPercent = offerPercent.toString().slice(2,5)
 

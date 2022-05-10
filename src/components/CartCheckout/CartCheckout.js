@@ -50,8 +50,6 @@ const CartCheckout = () => {
     setOrderID( addOrderToFirestore.id );
 
     deleteItemFromDB()
-
-
     
   }
 

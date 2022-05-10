@@ -13,7 +13,6 @@ import { Button } from '@mui/material';
 
 const ImageUploader = () => {
 
-    /*User context*/
     const { userProvider, setUserProvider } = useContext(LoginContext);
 
     /*Hook que guarda la imágen*/
@@ -27,7 +26,6 @@ const ImageUploader = () => {
         URL.length > 1 && userRegister(userProvider.mail, userProvider);
     },[URL])
 
-    /*Guardo la info de la imagen en un hook*/
     const inputSendImage = (e) => {
         const imgRef = e.target.files[0]
         setImageFile( imgRef )

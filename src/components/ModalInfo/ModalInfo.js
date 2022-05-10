@@ -1,12 +1,10 @@
+/*HOOKS*/
 import React,{ useState } from 'react'
+
+/*Material UI*/
 import Modal from '@mui/material/Modal';
 import { Button } from '@mui/material';
 
-
-const style = {
-  width:'100',
-  height:'100vh',
-}
 
 const ModalInfo = ( {props}) => {
 

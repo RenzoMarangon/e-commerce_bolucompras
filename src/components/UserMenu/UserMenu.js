@@ -1,7 +1,10 @@
+/*HOOKS*/
 import React, { useContext } from 'react'
+import LoginContext from '../../context/LoginContext'
+
+/*Material UI*/
 import Menu from '@mui/material/Menu';
 import { Avatar } from '@mui/material';
-import LoginContext from '../../context/LoginContext'
 
 
 const UserMenu = ( { children } ) => {
@@ -21,6 +24,7 @@ const UserMenu = ( { children } ) => {
     <div className='userMenu-container'>
 
     {
+      /*Si no hay imagen de perfil muestra un avatar*/
       userProvider.image.length>1 ? (
         <img className='userMenu-container__profile-picture' src={ userProvider.image }  onClick={handleClick}/>
       ) : (

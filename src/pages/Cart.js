@@ -1,16 +1,21 @@
+/*Hooks*/
 import React,{ useContext, useState } from 'react'
 import CartContext from '../context/CartContext'
+import { Link } from 'react-router-dom';
+
+/*Firebase*/
+import db from '../utils/firebase';
+import  { addDoc, collection } from 'firebase/firestore';
+
+/*Material UI*/
 import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import db from '../utils/firebase';
-import  { addDoc, collection } from 'firebase/firestore';
-import { Link } from 'react-router-dom';
 
 
 const Cart = () => {
-  /*Cart context*/
-  const { cartWidgetItems, removeCartItem, totalAddCartItemCount, clearCartWidget } = useContext(CartContext);
+
+  const { cartWidgetItems, totalAddCartItemCount, clearCartWidget } = useContext(CartContext);
 
   const [ successOrderID, setSuccessOrderID ] = useState('')
 

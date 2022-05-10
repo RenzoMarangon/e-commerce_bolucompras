@@ -1,9 +1,12 @@
+/*HOOKS*/
 import React,{ useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
 
-/*ICONOS*/
+/*Material UI*/
+import Button from '@mui/material/Button';
 import { Skeleton } from '@mui/material';
+
+/*FontAwesome*/
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPersonDress, faGem, faPerson, faComputer } from '@fortawesome/free-solid-svg-icons'
 

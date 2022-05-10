@@ -1,11 +1,16 @@
+/*HOOKS*/
 import React, { useContext, useEffect, useState } from 'react'
-import db,{ app } from '../../utils/firebase';
-import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged  } from "firebase/auth";
 import LoginContext from '../../context/LoginContext';
 import CartContext from '../../context/CartContext';
-import { Button } from '@mui/material';
-import { getDocs, doc, collection, setDoc,  } from "firebase/firestore"
 import { useNavigate } from 'react-router-dom';
+
+/*Firebase*/
+import db,{ app } from '../../utils/firebase';
+import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged  } from "firebase/auth";
+import { getDocs, doc, collection, setDoc,  } from "firebase/firestore"
+
+/*Material UI*/
+import { Button } from '@mui/material';
 
 
 
@@ -32,8 +37,11 @@ const UserLoginByGoogle = () => {
         
         setUserProvider( us )
 
+        /*Guardo los datos en la DB*/
         userRegister(email, us)
 
+        /*Si había un carrito antes de que el usuario
+        se loguee, entonces guardo el carrito*/
         if( totalAddCartItemCount() > 1 ) {
           itemRegister( email )
         }

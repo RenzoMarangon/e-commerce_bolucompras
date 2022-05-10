@@ -1,10 +1,13 @@
+/*Hooks*/
 import React from 'react';
-import UserLoginByMail from '../components/UserLoginByMail/UserLoginByMail';
-import Divider from '@mui/material/Divider';
-import UserLoginByGoogle from '../components/UserLoginByGoogle/UserLoginByGoogle';
-import { Button } from '@mui/material';
-import UserRegister from './UserRegister';
 import { Link } from 'react-router-dom';
+
+/*Components*/
+import UserLoginByMail from '../components/UserLoginByMail/UserLoginByMail';
+import UserLoginByGoogle from '../components/UserLoginByGoogle/UserLoginByGoogle';
+
+/*Material UI*/
+import { Button } from '@mui/material';
 
 const LoginPage = () => {
  

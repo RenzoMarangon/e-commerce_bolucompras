@@ -1,7 +1,12 @@
+/*HOOKS*/
 import React,{ useEffect, useState, useContext } from 'react'
 import LoginContext from '../../context/LoginContext';
+
+/*Firebase*/
 import db from '../../utils/firebase';
 import { getDocs, collection } from 'firebase/firestore';
+
+/*Material UI*/
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';

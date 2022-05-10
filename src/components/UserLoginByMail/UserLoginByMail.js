@@ -70,9 +70,7 @@ const UserLoginByMail = () => {
             }
         })
 
-
         userData && itemRegister(id);
-
     }
 
       /*Guardo los datos de la consola en fireStore*/
@@ -97,8 +95,6 @@ const UserLoginByMail = () => {
         const itemCollection = collection(db,'carritos');
         const itemDoc = doc( db, 'carritos', userID )
         const addItemToFirestore = await setDoc( itemDoc, itemsListToObject )
-    
-
     }
 
     const inputEnter = (e) => {

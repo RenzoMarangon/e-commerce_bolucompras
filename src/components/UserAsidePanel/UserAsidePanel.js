@@ -1,6 +1,9 @@
-import { Input } from '@mui/material'
+/*HOOKS*/
 import React, { useContext } from 'react'
 import LoginContext from '../../context/LoginContext'
+
+/*Material UI*/
+import { Input } from '@mui/material'
 
 const UserAsidePanel = () => {
 
@@ -21,4 +24,4 @@ const UserAsidePanel = () => {
   )
 }
 
-export default UserAsidePanel
+export default UserAsidePanel;

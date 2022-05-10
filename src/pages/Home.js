@@ -1,7 +1,12 @@
+/*Hooks*/
 import React, { useState, useEffect } from 'react'
-import ItemListContainer from '../components/ItemListContainer/ItemListContainer'
+
+/*Firebase*/
 import db from '../utils/firebase'
 import { collection, getDocs } from 'firebase/firestore'
+
+/*Components*/
+import ItemListContainer from '../components/ItemListContainer/ItemListContainer'
 
 
 const Home = () => {

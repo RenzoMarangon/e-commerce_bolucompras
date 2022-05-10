@@ -30,7 +30,6 @@ const NavBar = () => {
 
     const { setCartWidgetItems, cartWidgetItems } = useContext( CartContext );
 
-
     const [ userData, setUSerData ] = useState(false);
 
     const [ showLinks, setShowLinks ] = useState(true);

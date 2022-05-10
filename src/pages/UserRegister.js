@@ -1,7 +1,12 @@
+/*HOOKS*/
 import React from 'react'
-import Divider from '@mui/material/Divider';
+
+/*Components*/
 import UserLoginByGoogle from '../components/UserLoginByGoogle/UserLoginByGoogle';
 import UserRegisterByMail from '../components/UserRegisterByMail/UserRegisterByMail';
+
+/*Material UI*/
+import Divider from '@mui/material/Divider';
 
 const UserRegister = () => {
   return (

@@ -41,19 +41,6 @@ const ItemDetailContainer = () =>{
 
     }
 
-    // const getProducts = () =>{
-    //   fetch('https://fakestoreapi.com/products')
-    //     .then( (response)=>{
-    //       return response.json()
-    //     })
-    //     .then((products) =>{
-    //       setProducts(products)
-    //       filterByID(products,id,category)
-    //       setLoading(true);
-    //     })
-    // }
-
-
     const filterByID = (products, id, category ) =>{
 
       /*Si el ID y la categoria coincide con el producto lo guardo*/

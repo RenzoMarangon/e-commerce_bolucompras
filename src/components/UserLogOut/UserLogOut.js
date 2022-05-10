@@ -1,9 +1,14 @@
+/*HOOKS*/
 import React, { useContext } from 'react'
-import { getAuth, signOut } from 'firebase/auth'
-import '../../utils/firebase';
-import { Button } from '@mui/material';
 import LoginContext from '../../context/LoginContext'
 import { useNavigate } from 'react-router-dom';
+
+/*Firebase*/
+import '../../utils/firebase';
+import { getAuth, signOut } from 'firebase/auth'
+
+/*Material UI*/
+import { Button } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 

@@ -8,9 +8,9 @@ import { Button } from '@mui/material';
 
 const CardItem = ({ props }) => {
 
-  /*Desestructuracion del producto*/
   const { id, title, description, price, stock, category, image, prevPrice} = props;
 
+  /*Saco la cantidad de porcentaje de cada oferta*/
   let offerPercent = (prevPrice/price).toFixed(2)
   offerPercent = offerPercent.toString().slice(2,5)
   return (

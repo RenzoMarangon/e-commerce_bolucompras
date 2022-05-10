@@ -44,18 +44,9 @@ const CategoryContainer = () => {
     const filterByCategory = (listProducts, category) =>{
         return listProducts.filter(( product ) => {
            return product.category === category;
-        })
-
-        
+        })     
     }
 
-        // fetch(`https://fakestoreapi.com/products/category/${category}`)
-        // .then((response)=>{
-        //     return response.json();
-        // }).then((products)=>{
-        //     setProducts(products);
-        //     setLoader(true);
-        // })
     
   return (
     <ItemListContainer listProducts={products} loading={loader}/>

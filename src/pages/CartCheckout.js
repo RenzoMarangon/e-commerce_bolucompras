@@ -1,13 +1,21 @@
+/*HOOKS*/
 import React, { useContext, useEffect, useState } from 'react'
 import CartContext from '../context/CartContext'
 import LoginContext from '.././context/LoginContext'
+import { useNavigate } from 'react-router-dom';
+
+
+/*Firebase*/
 import db from '../utils/firebase';
 import {  collection, doc, addDoc, setDoc, getDocs, deleteDoc } from 'firebase/firestore';
+
+/*Material UI*/
 import { Button } from '@mui/material';
 import Modal from '@mui/material/Modal';
+
+/*FontAwesome*/
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useNavigate } from 'react-router-dom';
 
 
 const CartCheckout = () => {
