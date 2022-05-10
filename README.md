@@ -15,9 +15,5 @@ Funciones que puede realizar la SPA:
     *Navegar a través de las diferents partes de la página a traves del Router-dom
 
 
-<a href="https://www.loom.com/share/3b1c27401d1042bda79e4a48bb7604b7">
-    <p>Bolucompras - 9 May 2022 - Watch Video</p>
-    <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/3b1c27401d1042bda79e4a48bb7604b7-with-play.gif">
-</a>
-
+<iframe width="640" height="297" src="https://www.loom.com/embed/3b1c27401d1042bda79e4a48bb7604b7" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
