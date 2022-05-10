@@ -135,7 +135,6 @@ const UserRegisterByMail = () => {
             
             if( cart.id == userID ){
                 const objetosGuardados = Object.values( cart.data() ) 
-                console.log(objetosGuardados)
                 objetosGuardados.map(( item )=>{
                 
                 addItemToCart( item )

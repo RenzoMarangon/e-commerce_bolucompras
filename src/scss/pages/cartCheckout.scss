@@ -119,10 +119,14 @@
         width: 20vw;
         background-color: var(--beigex);
         color: var(--orangeLight);
+        &:hover{
+            background-color: var(--beigex) ;
+
+        }
     }
 
     .modal-container__id{
-        width: 20vw;
+        width: 40vw;
         height: 20vh;
         background-color: #fff;
         margin-bottom: 2rem;

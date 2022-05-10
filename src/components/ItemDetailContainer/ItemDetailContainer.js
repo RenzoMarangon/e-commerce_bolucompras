@@ -25,7 +25,6 @@ const ItemDetailContainer = () =>{
         setProducts(prods)
         filterByID(prods,id,category)
         setLoading(true);
-        console.log(products)
       })
     },[id])
 
