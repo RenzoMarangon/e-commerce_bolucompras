@@ -20,7 +20,7 @@ Funciones que puede realizar la SPA:
 </a>
 
 <a href="https://www.loom.com/share/6c3ef35d438b47139958721973c546c6">
-    <p>Bolucompras - User register test - Watch Video</p>
+    <p>Bolucompras - User register test</p>
     <img style="max-width:300px;margin: 1rem 0;" src="https://cdn.loom.com/sessions/thumbnails/6c3ef35d438b47139958721973c546c6-with-play.gif">
 </a>
 
