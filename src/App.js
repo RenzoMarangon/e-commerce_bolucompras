@@ -16,6 +16,7 @@ import CartCheckout from './pages/CartCheckout';
 import LoginPage from './pages/LoginPage'
 import UserPanel from './pages/UserPanel';
 import UserRegister from './pages/UserRegister';
+import UserTicket from './components/UserTicket/UserTicket';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
                 <Route path='/CartCheckout' element={ <CartCheckout /> }/>
                 <Route path='/LoginPage' element={ <LoginPage /> }/>
                 <Route path='/UserRegister' element={ <UserRegister /> }/>
+                <Route path='/UserTickets' element={ <UserTicket /> }/>
               </Routes>
             </BrowserRouter>
         </CartProvider>

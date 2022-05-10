@@ -22,14 +22,19 @@ const CartWidget = () =>{
     /*Hook que revisa si el item fue removido del carrito*/
     const [ itemRemoved, setItemRemoved ] = useState( false );
 
+    const [ itemAdded, setItemAdded ] = useState( false );
+
+
     /*Cart context*/
     const { cartWidgetItems, removeCartItem, cartItemCount, setCartWidgetItems } = useContext(CartContext);
+
 
     useEffect(()=>{
         /*Si se borra un producto del carrito 
         entonces lo borra de la base de datos*/
         itemRemoved && deleteItemFromDB();
-    },[itemRemoved])
+
+    },[ itemRemoved ])
 
     /*Menu de CartWidget*/
     const [anchorCartWidget, setAnchorCartWidget] = React.useState(null);
@@ -37,7 +42,7 @@ const CartWidget = () =>{
 
     const handleOpenCartWidget = (event) => {
         setAnchorCartWidget(event.currentTarget);
-        getWidget()
+        getWidget();
     };
 
     const handleCloseCartWidget = () => {
@@ -55,16 +60,17 @@ const CartWidget = () =>{
         const cartsCollection = collection(db, 'carritos');
         const cartsList = await getDocs(cartsCollection)
         
-        cartsList.docs.forEach(( cart )=>{
+        cartsList.docs.map(( cart )=>{
             if( cart.id == userProvider.mail ){
 
                 const cartProductsArray = Object.values( cart.data() );
         
                 setCartWidgetItems( cartProductsArray )
 
+                
             }
         })
-    }   
+    } 
 
     /*Borro el producto del cartContext y 
     le digo al hook que se borró un item*/

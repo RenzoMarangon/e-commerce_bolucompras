@@ -15,7 +15,7 @@ import ItemCount from '../ItemCount/ItemCount'
 
 /*Firebase*/
 import db from '../../utils/firebase';
-import { doc, setDoc, collection } from 'firebase/firestore';
+import { doc, setDoc, collection, getDocs } from 'firebase/firestore';
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -29,7 +29,7 @@ const ItemDetail = ({ props }) => {
     const {id, title, description, price, stock, image, prevPrice } = props;
 
     /*Cart context*/
-    const { cartWidgetItems, addItemToCart } = useContext(CartContext);
+    const { cartWidgetItems, addItemToCart,} = useContext(CartContext);
 
     /*User context*/
     const { userProvider } = useContext(LoginContext);
@@ -39,6 +39,7 @@ const ItemDetail = ({ props }) => {
     /*Hook que revisa si el producto se agregó un item al carrito*/
     const [ productAdded, setProductAdded ] = useState(false);
 
+
     let offerPercent = (prevPrice/price).toFixed(2)
     offerPercent = offerPercent.toString().slice(2,5)
 
@@ -47,22 +48,19 @@ const ItemDetail = ({ props }) => {
         /*Pregunto si hay items en el carrito y si el usuario esta logueado
         Si es así, agrego el item a la base de datos*/
 
-        if(cartWidgetItems.length>0 && userProvider.mail.length>1){
-            itemRegister( userProvider.mail, cartWidgetItems )
-            console.log(cartWidgetItems)
+        if(productAdded){
+            itemRegister( userProvider.mail );
         }
-
-    },[cartWidgetItems])
+    }, [ productAdded ])
 
 
 
     const addProductToCart = (props) =>{
 
-        addItemToCart({...props , stockCount: stockToAdd })
+        const product = ({...props , stockCount: stockToAdd })
 
+        addItemToCart( product )
         setProductAdded(true)
-
-        /*Muestra la alerta*/
         setOpen(true)
     } 
         
@@ -81,7 +79,7 @@ const ItemDetail = ({ props }) => {
 
 
     /*Guardo los datos de la consola en fireStore*/
-    const itemRegister = async( userID, cartWidgetItems ) => {
+    const itemRegister = async( userID ) => {
 
         /*Como Firebase no me dejaba agregar un array, tuve que
         convertir el contenido del carrito en una collecion de objetos*/
@@ -100,43 +98,57 @@ const ItemDetail = ({ props }) => {
 
   return (
     <div className='itemDetail'>
-        
-        <img className='itemDetail__images' src={ image } />
 
-        <div className='itemDetail__text'>
-            {/*BreadCrumbs*/}
-            <div role="presentation" onClick={handleClickBreadcrumb}>
-            <Breadcrumbs aria-label="breadcrumb">
-                <Link underline="hover" color="inherit" to="/">
-                    Inicio
-                </Link>
+        <div className='links' role="presentation" onClick={handleClickBreadcrumb}>
+        <Breadcrumbs aria-label="breadcrumb">
+            <Link underline="hover" color="inherit" to="/">
+                Inicio
+            </Link>
 
-                <Link underline="hover" color="inherit" to={`/Categorys/${category}`} >
-                    { category }
-                </Link>
+            <Link underline="hover" color="inherit" to={`/Categorys/${category}`} >
+                { category }
+            </Link>
 
-                <Link underline="hover" color="text.primary" to={`/${category}/${id}`} aria-current="page">
-                    { title }
-                </Link>
-            </Breadcrumbs>
+            <Link underline="hover" color="text.primary" to={`/${category}/${id}`} aria-current="page">
+                { title }
+            </Link>
+        </Breadcrumbs>
         </div>
+
+        <div className='itemDetail__images'>
+            <img src={ image } />
+        </div>
+
+        <div className='item-detail__components'>
+            <div className='itemDetail__text'>
+                {/*BreadCrumbs*/}
                 
             <div className='itemDetail__info'>
-                
-                <h2>{ title }</h2>
-                <p> { description } </p>
+
+            <h2>{ title }</h2>
+
                 {
                 prevPrice ? ( 
                 <>
-                    <p>${ prevPrice }</p>
-                    <p>{ offerPercent }%</p>
+                    <p className='prevPrice'>${ prevPrice }</p>
+                    <div className='offer'>
+                        <p className='price'> ${ price } </p>
+                        <p className='offerPercent'>{ offerPercent }% off</p>
+                    </div>
+
                 </>
                 ) : (
-                    ''
+  
+                    <div className='offer'>
+                        <p className='price'> ${ price } </p>
+
+                    </div>
+                    
                 )
                 }
-                <p> ${ price } </p>
-                <p>12 cuotas sin interes de ${ (price/12).toFixed(2) }</p>
+                <Button className='cuotas' >12 cuotas sin interes de ${ (price/12).toFixed(2) }</Button>
+
+                <p> { description } </p>
 
 
             </div>
@@ -145,18 +157,20 @@ const ItemDetail = ({ props }) => {
             
             productAdded==false ? (
 
-            <div className='itemDetail__info'>
+            <div className='itemDetail__add'>
                 { stock > 3 ? (
                 
-                    <>
-                    <p className='stock'>stock disponible</p> 
+                    <div className='itemDetail__stockCount'>
+                    <Alert className='alert' variant="filled" severity="info">
+                        Stock disponible.
+                    </Alert>
 
                     { !productAdded && <ItemCount stock = { stock } addStock = { setStockCount } count = { stockToAdd } /> }
 
-                    <Button className='itemDetail__buttons-btn' onClick={()=>{ addProductToCart(props); }} > 
+                    <Button className='itemDetail__agregarAlCarrito' onClick={()=>{ addProductToCart(props); }} > 
                          Agregar al carrito 
                     </Button>
-                    </>
+                    </div>
 
                 ) : (
 
@@ -197,6 +211,7 @@ const ItemDetail = ({ props }) => {
             </div>
             </>
             )}
+            </div>
             
             
 

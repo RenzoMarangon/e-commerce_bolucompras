@@ -5,7 +5,7 @@ import LoginContext from '../../context/LoginContext';
 
 /*Firebase*/
 import db from '../utils/firebase';
-import {  collection, doc, addDoc, setDoc, getDocs } from 'firebase/firestore';
+import {  collection, doc, addDoc, setDoc, getDocs,   } from 'firebase/firestore';
 
 /*Material UI*/
 import { Button } from '@mui/material';
@@ -49,6 +49,10 @@ const CartCheckout = () => {
     const addOrderToFirestore = await addDoc( ordersCollection, newOrder )
     setOrderID( addOrderToFirestore.id );
 
+    deleteItemFromDB()
+
+
+    
   }
 
   const getUserOrders = async( userID ) => {
@@ -91,7 +95,8 @@ const CartCheckout = () => {
       const userOrderDoc = doc( db, 'userOrders', userProvider.mail );
       const addOrderToFirestore = await setDoc( userOrderDoc, userOrderObject )
     }
-  
+
+
 
   return (
     <div className='cartCheckout-container'>
@@ -115,6 +120,9 @@ const CartCheckout = () => {
             <p>Total: { totalAddCartItemCount() } </p>
 
             <Button onClick={ setOrders }> Enviar </Button>
+
+            <Button onClick={ deleteItemFromDB }> eeee </Button>
+
         </div>
         
     </div>

@@ -4,6 +4,7 @@ import '../../utils/firebase';
 import { Button } from '@mui/material';
 import LoginContext from '../../context/LoginContext'
 import { useNavigate } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 const UserLogOut = () => {
@@ -35,7 +36,7 @@ const UserLogOut = () => {
   return (
     <div className='userSignOut-container'>
         <Button onClick={ userSignOut } > 
-            Salir
+            <LogoutIcon /> Salir
         </Button>
     </div>
   )

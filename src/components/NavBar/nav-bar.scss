@@ -97,6 +97,21 @@
 
         }
     }
+    .userMenu-container{
+        display: flex;
+        flex-direction: column;
+        .name{
+            text-align: center;
+        }
+        a{
+            margin:.2rem 0;
+            span{
+                margin: auto;
+
+                margin-left: .2rem;
+            }
+        }
+    }
 }
 
 @media screen and (min-width:451px) and (max-width:1000px){

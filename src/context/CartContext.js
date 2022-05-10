@@ -48,7 +48,7 @@ const CartProvider= ({ children }) =>{
     }
 
     const removeCartItem = (id) => {
-        setCartWidgetItems( cartWidgetItems.filter(( item )  => item.id !== id ) ) 
+        setCartWidgetItems( cartWidgetItems.filter(( item )  => item.id !== id ) )
     }
 
     const clearCartWidget = () => {

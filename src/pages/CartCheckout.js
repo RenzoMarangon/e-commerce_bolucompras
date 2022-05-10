@@ -2,22 +2,23 @@ import React, { useContext, useEffect, useState } from 'react'
 import CartContext from '../context/CartContext'
 import LoginContext from '.././context/LoginContext'
 import db from '../utils/firebase';
-import {  collection, doc, addDoc, setDoc, getDocs } from 'firebase/firestore';
+import {  collection, doc, addDoc, setDoc, getDocs, deleteDoc } from 'firebase/firestore';
 import { Button } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useNavigate } from 'react-router-dom';
 
 
 const CartCheckout = () => {
 
-  const { cartWidgetItems, totalAddCartItemCount, removeCartItem } = useContext(CartContext);
+  const { cartWidgetItems, totalAddCartItemCount, removeCartItem, clearCartWidget } = useContext(CartContext);
 
   const { userProvider } = useContext(LoginContext);
 
   const [ orderID, setOrderID ] = useState('');
 
-
+  const navigate = useNavigate();
 
   const [ newOrder, setNewOrder ] = useState({
     buyer: userProvider,
@@ -54,7 +55,10 @@ const CartCheckout = () => {
   },[ orderID, itemRemoved ])
 
 
-  
+  const finishPurchase = () => {
+    deleteCart();
+    navigate('/UserTickets');
+  }
 
   const setOrders = async() =>{
 
@@ -137,6 +141,16 @@ const CartCheckout = () => {
     }
 
 
+    const deleteCart = async() =>{
+      
+      clearCartWidget();
+
+      const itemCollection = collection(db,'carritos');
+      const itemDoc = doc( db, 'carritos', userProvider.mail )
+      await deleteDoc(itemDoc);
+
+  }
+
   return (
     <div className='cartCheckout-container'>
 
@@ -182,8 +196,11 @@ const CartCheckout = () => {
             aria-describedby="modal-modal-description"
           >
             <div className='modal-container'>
-              {`id: ${ orderID }`}
-              <Button  onClick={handleClose}> Finalizar compra </Button>
+              <div className='modal-container__id'>
+                <p>¡Felicidades por tu compra! tu ID de compra es:</p>
+                <p><span>{` ${ orderID }`}</span> </p>
+              </div>
+              <Button  onClick={ finishPurchase }> Ir a mis compras </Button>
             </div>
 
           </Modal>

@@ -17,7 +17,7 @@ const ItemCount = ({ stock, addStock, count }) =>{
 
 
     return(
-        <div className="itemCount">
+        <div className="button-stockCount">
             <Button onClick={ removeCount }>-</Button>
             <p>{ count }</p>
             <Button onClick={ addCount }>+</Button>

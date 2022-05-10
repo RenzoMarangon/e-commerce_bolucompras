@@ -2,17 +2,18 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom';
 import LoginContext from '../../context/LoginContext'
+import CartContext from '../../context/CartContext';
 
 /*Components*/
 import logo from '../../img/logo.png'
 import CartWidget from '../CartWidget/CartWidget';
 import UserMenu from '../UserMenu/UserMenu';
-import UserLoginByMail from '../UserLoginByMail/UserLoginByMail';
-import UserLoginByGoogle from '../UserLoginByGoogle/UserLoginByGoogle'
 import UserLogOut from '../UserLogOut/UserLogOut';
 
 /*Material UI*/
 import Button from '@mui/material/Button';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ShopIcon from '@mui/icons-material/Shop';
 
 /*Font Awesome*/
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -27,15 +28,20 @@ const NavBar = () => {
 
     const { userProvider, setUserProvider } = useContext(LoginContext);
 
+    const { setCartWidgetItems, cartWidgetItems } = useContext( CartContext );
+
+
     const [ userData, setUSerData ] = useState(false);
 
-    const [ showLinks, setShowLinks ] = useState(true)
+    const [ showLinks, setShowLinks ] = useState(true);
+
+    const [ itemsInCart, setItemsInCart ] = useState(0);
+    
     
     useEffect( () =>{
       
-      getUser()
+      getUser();
       showHideMenu();
-
     },[])
 
 
@@ -67,7 +73,6 @@ const NavBar = () => {
           showUser(user.email)
           setUSerData(true)
        } 
-
       })
     }
 
@@ -84,7 +89,7 @@ const NavBar = () => {
         if( user.data().mail == id ){
           const userData = user.data();
 
-          setUserProvider(userData);
+          setUserProvider( userData );
         }
       })
     }
@@ -92,10 +97,8 @@ const NavBar = () => {
   
   return (
 
-    
     <header >
-
-        <div className='header-container'>
+        <div className='header-container' >
             <div className='header-container__logo'>
             
                 <img src={ logo } />
@@ -140,15 +143,18 @@ const NavBar = () => {
                   si encuentra los datos del usuario los muestra
                   sino, muestra un boton de registro y los input para loguearse*/}
                   
-                  <Button   >
-                  <UserMenu >
-                      
+                  <Button>
+                  <UserMenu>
                         {
                           userData ? (
-                          <div style={ {padding:'5px'}}>
-                            <p> { `${userProvider.name}` }</p>
+                          <div className='userMenu-container' style={ {padding:'5px'}}>
+                            <p className='name' > { `${userProvider.name}` }</p>
                             <Link to={'/UserPanel'}>
-                              <Button> Configuración </Button>
+                              <Button><SettingsIcon /><span> Configuración </span></Button>
+                            </Link>
+
+                            <Link to={'/UserTickets'}>
+                              <Button><ShopIcon /> <span>Mis compras </span></Button>
                             </Link>
                             <UserLogOut />
                           </div>

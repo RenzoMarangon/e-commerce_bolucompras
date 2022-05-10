@@ -5,6 +5,7 @@ import LoginContext from '../../context/LoginContext';
 import CartContext from '../../context/CartContext';
 import { Button } from '@mui/material';
 import { getDocs, doc, collection, setDoc,  } from "firebase/firestore"
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -14,7 +15,7 @@ const UserLoginByGoogle = () => {
 
     const { cartWidgetItems, totalAddCartItemCount, addItemToCart } = useContext(CartContext);
 
-
+    const navigate = useNavigate()
 
      const googleAuth = async() => {
       const provider = new GoogleAuthProvider();
@@ -37,6 +38,7 @@ const UserLoginByGoogle = () => {
           itemRegister( email )
         }
 
+        navigate("/");
 
       })
   }   

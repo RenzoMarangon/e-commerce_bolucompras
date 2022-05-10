@@ -1,68 +1,48 @@
-.itemDetail{
-    width: 80%;
-    height: 70vh;
-    display: grid;
-    grid-template-areas:   
-    "images text" ;
+.itemDetailContainer{
     margin: auto;
-
-
-
-    .itemDetail__text{
-        grid-area: text;
-        justify-self: end;
-
-        .itemDetail__info{
-            margin-bottom: 2rem;
-            text-align: center;
-
-            p{
-
-                padding: .2rem;
-                border-radius: .5rem;
-            }
-
-            .stock{
-                color:#008116;
-                background:#00811628;
-
-            }
-
-            .stockOut{
-                color:#b65200;
-                background:#b6520027;
-
-            }
-        }
-        .itemCount{
-            display: flex;
-            
-            button{
-                background-color: #DFE3E8;
-                margin:auto;
-                width: 100%;
-            }
-        }
-    }
-    .itemDetail__images{
-        grid-area: images;
-        width: 50%;
-        margin: auto;
-        img{
-            width: 100%;
-            max-height: 90%;
-            
-        }
-    } 
-    .itemDetail__buttons{
-        grid-area: buttons;
+    max-width: 1440px;
+    .itemDetail{
         display: flex;
-        flex-direction: column;
+        width: 100%;
 
-        .itemDetail__buttons-btn{
-            margin-top: 1rem;
-            background-color: #DFE3E8;
-            color: #000;
+        .item-detail__components{
+            background-color: #fff;
+            width: 60%;
+            margin: auto;
+            height: 60vh;
+            margin-left: 1rem;
+            padding: 1rem;
+            box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.47);
+            -webkit-box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.47);
+            -moz-box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.47);
+            border-radius: 1rem;
+        }
+    
+        .itemDetail__images{
+            background-color: #fff;
+            width: 40%;
+            display: flex;
+            margin: auto;
+            padding: 2rem;
+            height: 60vh;
+            box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.47);
+            -webkit-box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.47);
+            -moz-box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.47);
+            border-radius: 1rem;
+            
+            
+            img{
+                margin: auto;
+                height: 60%;
+                
+            }
+
+        }
+    
+        .itemDetail__text{
+           padding: 1rem;
+
         }
     }
+    
 }
