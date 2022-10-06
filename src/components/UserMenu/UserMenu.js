@@ -26,9 +26,9 @@ const UserMenu = ( { children } ) => {
     {
       /*Si no hay imagen de perfil muestra un avatar*/
       userProvider.image.length>1 ? (
-        <img className='userMenu-container__profile-picture' src={ userProvider.image }  onClick={handleClick}/>
+        <img className='userMenu-container__profile-picture' src={userProvider.image}  onClick={ handleClick }/>
       ) : (
-        <Avatar onClick={handleClick} />
+        <Avatar onClick={ handleClick } />
       )
     }
     <Menu

@@ -14,6 +14,9 @@ import UserLogOut from '../UserLogOut/UserLogOut';
 import Button from '@mui/material/Button';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ShopIcon from '@mui/icons-material/Shop';
+import SearchIcon from '@mui/icons-material/Search';
+import { styled, alpha } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
 
 /*Font Awesome*/
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -93,7 +96,54 @@ const NavBar = () => {
       })
     }
 
-  
+    //Buscar productos
+    const searchProducts = () =>{
+      console.log('asdddd')
+    }
+
+    //Barra de búsqueda
+    const Search = styled('div')(({ theme }) => ({
+      position: 'relative',
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: alpha(theme.palette.common.white, 0.15),
+      '&:hover': {
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
+      },
+      marginLeft: 0,
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(1),
+        width: 'auto',
+      },
+    }));
+    
+    const SearchIconWrapper = styled('div')(({ theme }) => ({
+      padding: theme.spacing(0, 2),
+      height: '100%',
+      position: 'absolute',
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }));
+    
+    const StyledInputBase = styled(InputBase)(({ theme }) => ({
+      color: 'inherit',
+      '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        cursor:'pointer',
+        [theme.breakpoints.up('sm')]: {
+          width: '7.5ch',
+          '&:focus': {
+            width: '15ch',
+          },
+        },
+      },
+    }));
   return (
 
     <header >
@@ -114,6 +164,8 @@ const NavBar = () => {
             { showLinks && 
             
             <div className='header-container__links'>
+
+
               
               <Link to={'/'} className='header-container__links-link' >
                 <Button> Inicio </Button>
@@ -136,6 +188,16 @@ const NavBar = () => {
                 <CartWidget className=' header-container__links-cartWidget'/>
               </div>
             
+              <Search  className='header-container__links-link'>
+                <SearchIconWrapper >
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase 
+                  placeholder="Buscar…"
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </Search>
+
               <div className='header-container__links-link' >
                 {/*Boton que muestra la imagen de perfil
                   y contiene el menu del usuario, 
