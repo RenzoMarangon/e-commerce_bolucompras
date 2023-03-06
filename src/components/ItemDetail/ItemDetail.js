@@ -95,7 +95,7 @@ const ItemDetail = ({ props }) => {
 
   return (
     <div className='itemDetail'>
-
+        {console.log(image)}
         <div className='links' role="presentation" onClick={handleClickBreadcrumb}>
         <Breadcrumbs aria-label="breadcrumb">
             <Link underline="hover" color="inherit" to="/">
@@ -113,7 +113,7 @@ const ItemDetail = ({ props }) => {
         </div>
 
         <div className='itemDetail__images'>
-            <img src={ image } />
+            { image ? <img src={ image } /> : 'Loading...' }
         </div>
 
         <div className='item-detail__components'>

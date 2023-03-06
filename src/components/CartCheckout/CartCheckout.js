@@ -119,7 +119,6 @@ const CartCheckout = () => {
 
             <Button onClick={ setOrders }> Enviar </Button>
 
-            <Button onClick={ deleteItemFromDB }> eeee </Button>
 
         </div>
         

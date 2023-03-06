@@ -18,4 +18,5 @@
 @use './scss/pages/loginPage.scss';
 @use './components/UserRegisterByMail/userRegister.scss';
 @use './scss/pages/userRegisterPage.scss';
-@use './components/UserTicket/userTicket.scss'
+@use './components/UserTicket/userTicket.scss';
+@use './scss/helpers/spinner.scss'

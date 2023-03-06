@@ -4,7 +4,6 @@
     .itemDetail{
         display: flex;
         width: 100%;
-
         .item-detail__components{
             background-color: #fff;
             width: 60%;
@@ -45,4 +44,28 @@
         }
     }
     
+}
+
+@media screen and (max-width:1150px)
+{
+    .itemDetailContainer{
+        max-width: 1150px !important;
+
+        .itemDetail{
+            display: grid;
+            grid-template-areas: "img" "price" "";
+            width: 100%;
+            .item-detail__components{
+                width: 100%;
+                height: 100%;
+                margin: 1rem 0;
+
+                
+            }
+        }
+
+        .itemDetail__buttons-btn{
+            width: 100% !important;
+        }
+    }
 }

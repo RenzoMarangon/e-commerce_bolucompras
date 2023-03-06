@@ -4,9 +4,7 @@
     border-radius: 1rem;
     background-color: #fff;
     padding: 1rem;
-
     .cartCheckout-container__items{
-        
         width: 80%;
         display: flex;
         flex-direction: column;
@@ -14,11 +12,13 @@
         
 
         .cartCheckout-container__items__item{
+
             margin: 1rem 0;
             padding: 1rem;
             position: relative;
             -webkit-box-shadow: 0px 9px 6px -11px rgba(0,0,0,0.55); 
             box-shadow: 0px 9px 6px -11px rgba(0,0,0,0.55);
+            display: flex;
             img{
                 height: 10rem;
                 max-width: 12rem;
@@ -145,6 +145,65 @@
                 border-radius: .2rem;
                 background-color: var(--orangeLight);
                 color:#fff;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1150px) {
+    .cartCheckout-container{
+        max-width: 94vw !important;
+        position: relative !important;
+   
+        .cartCheckout-container__items__item{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            position: inherit !important;
+            img{
+                margin: 2rem 0 !important;
+            }
+            .item-title{
+                top: 4% !important;
+                left: 10rem !important;
+                position: absolute;
+                
+            }
+            .item-stockCount{
+                top: 13.5% !important;
+                left: 10rem !important;
+            }
+            .item-total{
+                top: 22.5% !important;
+                left: 10rem !important;
+            }
+
+            .item-delete{
+                bottom: 0 !important;
+                right:  0 !important;
+            }
+        }
+
+        .cartCheckout-container__description{
+            width: 90vw !important;
+            height: 10vh;
+            .description-product{
+                left: 0;
+                top: 0;
+            }
+            .description-price{
+                left: 0;
+                top: 2.5rem
+
+            }
+    
+            .description-subtotal{
+                left: 0;
+                top: 5rem;
+
             }
         }
     }

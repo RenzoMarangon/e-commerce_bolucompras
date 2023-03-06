@@ -1,6 +1,7 @@
 .header-container{
-    max-width: 450px;
+    max-width: 1150px;
     height: 10vh;
+    margin-bottom: 2rem;
     .header-container__logo{
         display: flex;
         
@@ -54,7 +55,7 @@
 
 
 
-@media screen and (min-width:451px) {
+@media screen and (min-width:1151px) {
     .header-container{
         max-width: 1440px;
         display: grid;

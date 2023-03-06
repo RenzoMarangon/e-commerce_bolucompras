@@ -58,12 +58,12 @@ const NavBar = () => {
     /*Mostrar u ocultar menu hamburguesa segun el tamaño de la pantalla*/
     const [ showMenu, setShowMenu ] = useState(true);
 
-    /*Si el tamaño de la pantalla es menor a 450px 
+    /*Si el tamaño de la pantalla es menor a 1150px 
     muestro el menu responsive*/
     const showHideMenu =()=>{
       const width = document.body.clientWidth;
-      width<=450 ? setShowMenu(true) :  setShowMenu(false);
-      width<=450 && setShowLinks(false);
+      width<=1100 ? setShowMenu(true) :  setShowMenu(false);
+      width<=1100 && setShowLinks(false);
     }
 
     /*Me fijo si el usuario está logueado

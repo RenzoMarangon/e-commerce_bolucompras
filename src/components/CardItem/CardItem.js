@@ -8,13 +8,12 @@ import { Button } from '@mui/material';
 
 const CardItem = ({ props }) => {
 
-  const { id, title, description, price, stock, category, image, prevPrice} = props;
+  const { id, title, description, price, stock, category, image, prevPrice, loading} = props;
 
   /*Saco la cantidad de porcentaje de cada oferta*/
   let offerPercent = (prevPrice/price).toFixed(2)
   offerPercent = offerPercent.toString().slice(2,5)
   return (
-    
     <Link to={`/${category}/${id}`} className='card-item'>
       <img src={ image } alt={ image }/>
 

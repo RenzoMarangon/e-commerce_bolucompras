@@ -36,6 +36,7 @@ const ItemDetailContainer = () =>{
       return productosSnap.docs.map( (doc)=>{
         let product = doc.data();
         product.id = doc.id;
+        product.loading = loading;
         return product;
       }) 
 
@@ -54,7 +55,8 @@ const ItemDetailContainer = () =>{
 
     return(
         <div className='itemDetailContainer'>
-          {!loading ? <h1>carganding</h1> : <ItemDetail props={ products } />}
+          {!loading ? <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> 
+                    : <ItemDetail props={ products } />}
         </div>
     )
 };
